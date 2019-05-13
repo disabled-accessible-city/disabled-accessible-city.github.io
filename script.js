@@ -297,36 +297,6 @@ document.getElementById('interventions_2040').addEventListener('click', function
     intervention_area
   )
 })
-
-
-
-
-// Another layer again shows the boundaries of London's Boroughs
-// map.addLayer({         
-// id: 'Wards_Disabilities',       
-// type: 'fill-extrusion',         
-// source: {           
-// type: 'vector',           
-// url: 'mapbox://bogdy.2ykppun3'        
-// },         
-// 'source-layer': 'WARDS_polygon_Disabilities-duvnci',          
-// 'layout': {},         
-// paint: {
-// 'fill-extrusion-color':{
-//   'property':'Ward_Perce',
-//   'stops':[
-//     [0, 'yellow'],
-//     [11, 'orange'],
-//     [21, 'red']
-//   ]
-// },
-// 'fill-extrusion-height':{
-//   'type':'identity',
-//   'property':'Ward_Perce',
-// },
-// 'fill-extrusion-opacity':0.2
-// }
-// });
 });
 
 
