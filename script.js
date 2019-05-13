@@ -253,10 +253,13 @@ map.addLayer({
 
 
                 map.on('click', 'New_baley', function (e) {
-                  new mapboxgl.Popup()
-                  .setLngLat(e.lngLat)
-                  .setHTML(
-                    "<h3>" + e.features[0].properties.name + "<br/> "+  "<embed src='http://www.new-bailey.com/brochure/files/assets/common/downloads/New%20Bailey%20Brochure.pdf' width=500 height=500 type='application/pdf'>"
+                new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML(
+                  "<h3>" + e.features[0].properties.name 
+                  + "<br/> "+  "<embed src='http://www.new-bailey.com/brochure/files/assets/common/downloads/New%20Bailey%20Brochure.pdf' width=500 height=500 type='application/pdf'>"
+  
+                  //  e.features[0].properties.Descritpti + "m<br />2010: " 
                   )
                   .addTo(map);
                   });
