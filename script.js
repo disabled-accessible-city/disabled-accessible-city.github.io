@@ -40,7 +40,7 @@ map.addLayer({
   'layout': {},         
   paint: {
     'fill-color': '#ff8000',
-   'fill-line-width': 3,
+//    'fill-line-width': 3,
 
     'fill-opacity': 0.5
   }
