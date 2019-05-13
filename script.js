@@ -31,7 +31,7 @@ map.addLayer({
 // Another layer again shows the Carrington future development:
 map.addLayer({         
   id: 'Carrington',       
-  type: 'line',         
+  type: 'fill',         
   source: {           
   type: 'vector',           
   url: 'mapbox://bogdy.awj7v110'        
@@ -39,10 +39,10 @@ map.addLayer({
   'source-layer': 'Carrington-8f1npt',          
   'layout': {},         
   paint: {
-    'line-color': '#ff8000',
-    'line-width': 3,
+    'fill-color': '#ff8000',
+   'fill-line-width': 3,
 
-    // 'line-opacity': 0.9
+    'fill-opacity': 0.5
   }
   });
 
