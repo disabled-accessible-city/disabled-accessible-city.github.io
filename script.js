@@ -1,6 +1,4 @@
 
-
-
 mapboxgl.accessToken = 'pk.eyJ1IjoiYm9nZHkiLCJhIjoiY2puMzl1Y2ljMjl2aDNrbzFtZzU2dzFsZyJ9.h5bdy1iAE_46JJHBl2sf-g';
 const map = new mapboxgl.Map({
 container: 'map',
@@ -11,105 +9,7 @@ style: 'mapbox://styles/bogdy/cjud22znv0dwl1gns8eoxjo3w',
 });
 
 
-// window.onclick = function() {
-//   var intervention_areas = Object.keys(interventions);
-//   for (var i = 0; i < intervention_areas.length; i++) {
-//   var intervention_area = intervention_areas[i];
-  // if (isElementOnScreen(intervention_area)) {
-  //   setFirstInterv(intervention_area);
-  // break;
-  // }
-  // }
-  // };
-
-// var firstInterv = 'Ashton_Interchange';
-// function setFirstInterv(intervention_area) {
-// if (intervention_area === firstInterv) return;
- 
-// map.flyTo(interventions[intervention_area]);
- 
-// document.getElementById(intervention_area).setAttribute('class');
-// document.getElementById(firstInterv).setAttribute('class', '');
- 
-// activeChapterName = chapterName;
-// }
-
-// PART 1.
-// Map visualization and layer interaction
-
-map.on('load', function() {       
-
-  //The layer with all the parking bays is added from the Mapbox tileset Map ID
-map.addLayer({         
-id: 'MON-FRI-Start',       
-type: 'circle',         
-source: {           
-type: 'vector',           
-url: 'mapbox://bogdy.2uiei3v9'        
-},         
-'source-layer': 'Accessibility_hours-31cp3u',      
-'layout': {             
-'visibility': 'visible'         
-},         
-paint: {             
-'circle-color': 
-[
-        'interpolate',
-// For each circle points refering to "Tariff" a palette of colours id provided
-        ['linear'],
-        ['number', ['get', 'MO_FRStart']],
-        0, '#1d53aa',
-        100, '#baef00',
-        300, '#ffff00',
-        600, '#ffbf00'
-        
-      ],         
-'circle-opacity': 0.8,             
-'circle-stroke-width': {   
-stops: [[9, 3], [12, 2], [16, 1]]     
-},             
-'circle-stroke-color': '#ffff00',             
-'circle-stroke-opacity': 0.1,             
-'circle-radius': 1.5
-// {              
-// property: 'Parking_Sp',            
-// stops: [               
-// [{zoom: 9, value: 0},1],               
-// [{zoom: 9, value: 100}, 2],               
-// [{zoom: 12, value: 0}, 1],               
-// [{zoom: 12, value: 100}, 31],               
-// [{zoom: 16, value: 0}, 5],               
-// [{zoom: 16, value: 100}, 6],               
-// ]             
-// }
-}       
- //, filter: ['==', ['number', ['get', 'MO_FRStart']], 0]
-});
- 
-     
-
-  
-// map.addLayer({         
-// id: 'rail_system',       
-// type: 'line',         
-// source: {           
-// type: 'vector',           
-// url: 'mapbox://bogdy.1bkcdrbx'        
-// },         
-// 'source-layer': 'gis_osm_railways_free_1-0ehwil',      
-// 'layout': {    
-//   "line-join": "round",
-// "line-cap": "round"
-// },         
-// paint: {             
-//   'line-color': '#ed6498',
-//   'line-width': 0.5,
-//   'line-opacity': 0.5
-// }      
-//  //, filter: ['==', ['number', ['get', 'MO_FRStart']], 0]
-// });
- 
-
+map.on('load', function() { 
 
 // Another layer again shows the Ashton sation future development:
 map.addLayer({         
@@ -268,7 +168,8 @@ map.addLayer({
       'fill-opacity': 0.5
     }
     });
-
+  
+// Popup features on click
     map.on('click', 'Rail', function (e) {
       new mapboxgl.Popup()
       .setLngLat(e.lngLat)
@@ -297,16 +198,12 @@ map.addLayer({
         e.features[0].properties.name)      
         .addTo(map);    
         });
-      
         map.on('mouseenter', 'Metrolink', function () {      
           map.getCanvas().style.cursor = 'pointer';   
           }); 
-      
-      
           map.on('mouseleave', 'Metrolink', function () {    
             map.getCanvas().style.cursor = '';    
-            mypopup.remove();   
-            
+            mypopup.remove();
             }); 
       
 
@@ -322,7 +219,7 @@ map.addLayer({
                 + "<br/> "+ "<iframe src='https://player.vimeo.com/video/301024280' frameborder=0 allowfullscreen=allowfullscreen id=fitvid573283 width=500></iframe>"
 
                 //  e.features[0].properties.Descritpti + "m<br />2010: " 
- )
+              )
               .addTo(map);
               });
             map.on('mouseenter', 'Carrington', function () {
@@ -343,7 +240,7 @@ map.addLayer({
                   + "<br/> "+  "<embed src='https://assets.ctfassets.net/nv7y93idf4jq/33sLnXk4KIA8QY6IWcoAa4/8105cbc9c0c2aaf54d712d2d00a2879a/Tameside_Interchange_Consultation_Report.pdf' width=500 height=500 type='application/pdf'>"
   
                   //  e.features[0].properties.Descritpti + "m<br />2010: " 
-   )
+                  )
                 .addTo(map);
                 });
               map.on('mouseenter', 'Ashton_Interchange', function () {
@@ -394,64 +291,6 @@ map.addLayer({
                     map.getCanvas().style.cursor = '';
                     mypopup.remove();
                     });
-
-
-// map.addLayer({         
-//   id: 'MON-FRI-End',       
-//   type: 'circle',         
-//   source: {           
-//   type: 'vector',           
-//   url: 'mapbox://bogdy.2uiei3v9'        
-//   },         
-//   'source-layer': 'Accessibility_hours-31cp3u',      
-//   'layout': {                      
-//   },         
-//   paint: {             
-//   'circle-color': 
-//   [
-//           'interpolate',
-//   // For each circle points refering to "Tariff" a palette of colours id provided
-//           ['linear'],
-//           ['number', ['get', 'MO_FREndTi']],
-//           0, '#c94126',
-//         100, '#baef00',
-//         300, '#ffff00',
-//         600, '#ff3b14',
-//         1400, '#c94126'
-//         ],         
-//   'circle-opacity': 0.8,             
-//   'circle-stroke-width': {   
-//   stops: [[9, 3], [12, 2], [16, 1]]     
-//   },             
-//   'circle-stroke-color': '#ffff00',             
-//   'circle-stroke-opacity': 0.1,             
-//   'circle-radius': 1.5
-//   // {              
-//   // property: 'Parking_Sp',            
-//   // stops: [               
-//   // [{zoom: 9, value: 0},1],               
-//   // [{zoom: 9, value: 100}, 2],               
-//   // [{zoom: 12, value: 0}, 1],               
-//   // [{zoom: 12, value: 100}, 31],               
-//   // [{zoom: 16, value: 0}, 5],               
-//   // [{zoom: 16, value: 100}, 6],               
-//   // ]             
-//   // }
-//   }       
-//    //, filter: ['==', ['number', ['get', 'MO_FRStart']], 0]
-//   });
-
-
-// The slider moves using the Maximum Stay values
-document.getElementById('slider').addEventListener('input', function(e) {
-  var maxStay = parseFloat(e.target.value);
-  // update the map
-  map.setFilter('MON-FRI-Start', ['==', ['number', ['get', 'MO_FRStart']], maxStay]);
-
-  
-  // update text in the UI
-  document.getElementById('MOFRStart').innerText = maxStay;
-});
 
 document.getElementById('interventions_2040').addEventListener('click', function(){
   map.flyTo(
