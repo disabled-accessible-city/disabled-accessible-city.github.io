@@ -19,6 +19,7 @@
                 left: 0;
                 padding: 10px;
             }
+
             .map-overlay .map-overlay-inner {
                 background-color: #fff;
                 box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
@@ -31,11 +32,13 @@
                 border: none;
                 width: 100%;
             }
+
             .map-overlay h2 {
                 line-height: 24px;
                 display: block;
                 margin: 0 0 10px;
             }
+
             .map-overlay label {
                 font: 18px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
                 display: block;
@@ -43,17 +46,20 @@
                 margin: 0 0 0 10px;
                 padding: 0;
             }
+
             .map-overlay label2 {
                 font: 13px/15px 'Helvetica Neue', Arial, Helvetica, sans-serif;
                 vertical-align: bottom;
                 margin: 0;
                 padding: 0;
             }
+
             .map-overlay .legend .bar {
                 height: 10px;
                 width: 100%;
                 background: linear-gradient(to right, #FCA107, #7F3121);
             }
+
             .map-overlay input {
                 background-color: transparent;
                 display: inline-block;
@@ -63,10 +69,12 @@
                 margin: 6px 0 0 0;
                 cursor: ew-resize;
             }
+
             .map-overlay p.credit {
                 margin: 0;
                 padding: 0;
             }
+
             .map-overlay .listing {
                 overflow: auto;
                 max-height: 100%;
@@ -77,6 +85,7 @@
                 padding: 0;
                 margin: 0 auto;
             }
+
             .mapboxgl-popup {
                 max-width: 400px;
                 min-width: 180px;
@@ -84,12 +93,14 @@
                 padding: 0;
                 margin: 0,0,0,20px;
             }
+
             .mapboxgl-popup-tip-container {
                 width:0px;
                 height:0px;
                 margin:0 auto;
                 position:relative;
             }
+
             .mapboxgl-popup-tip {
                 width:0;
                 height:0;
@@ -99,6 +110,7 @@
                 border-top:0 solid transparent;
                 box-shadow:none;
             }
+
             .legend {
                 background-color: #fff;
                 border-radius: 3px;
@@ -122,6 +134,7 @@
                 margin-right: 5px;
                 width: 10px;
             }
+
             #menu {
                 background: #fff;
                 position: absolute;
@@ -163,6 +176,7 @@
             #menu a.active:hover {
                 background: #3074a4;
             }
+
         </style>
     </head>
     
@@ -262,6 +276,7 @@
 
         <script>
             mapboxgl.accessToken = 'pk.eyJ1Ijoic2FuZ3l1aG9uZyIsImEiOiJjanF6NmxxMmMwMTdyNGJwazA5dGwwdXJtIn0.jxzKiJnfDiKwvune9_CCuw';
+
             var map = new mapboxgl.Map({
                 container: 'map',
                 style: 'mapbox://styles/sangyuhong/cjv4yk47y2lrx1fofzfcdw8t8',
@@ -269,6 +284,7 @@
                 zoom: 4.32, // starting zoom
                 pitch: 0 // tilt of the viewpoint in degrees
             });
+
             // Holds visible station features for filtering
             var stations = [];
  
@@ -288,6 +304,7 @@
                         var prop = feature.properties;
                         var item = document.createElement('a');
                         item.target = '_blank';
+
                         item.textContent = prop.Station + ' (' + prop.StepFreeAc + 'IsAccessible)';
                         item.addEventListener('mouseover', function() {
                             // Highlight corresponding feature on the map
@@ -331,6 +348,7 @@
                 });
                 return uniqueFeatures;
             }
+
             map.on('load', function() {
                 // Add standard navigation control
                 map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
@@ -378,8 +396,10 @@
                             ]
                         }}
                 });
+
                 var denLegendEl = document.getElementById('den-legend');
                 var proLegendEl = document.getElementById('pro-legend');
+
                 //Event listener for layer switch
                 document.getElementById('layer1').addEventListener('click', function(){
                     map.setPaintProperty('density','fill-opacity',0.95);
@@ -387,12 +407,14 @@
                     denLegendEl.style.display = 'block';
                     proLegendEl.style.display = 'none';
                 });
+
                 document.getElementById('layer2').addEventListener('click', function(){
                     map.setPaintProperty('density','fill-opacity',0);
                     map.setPaintProperty('proportion','fill-opacity',0.95);
                     denLegendEl.style.display = 'none';
                     proLegendEl.style.display = 'block';
                 });
+
                 // Add the proportional circle layer to the map
                 map.addLayer({
                     id: 'Accessible Station',
@@ -435,6 +457,7 @@
                             stops: [[4, 3], [9, 6]]
                         }}
                 });
+
                 // Add the proportional circle layer to the map
                 map.addLayer({
                     id: 'Inaccessible Station',
@@ -477,6 +500,8 @@
                             stops: [[4, 3], [9, 6]]
                         }}
                 });
+
+
                 var toggleableLayerIds = [ 'Accessible Station' ];
  
                 for (var i = 0; i < toggleableLayerIds.length; i++) {
@@ -506,6 +531,7 @@
                     var layerss = document.getElementById('menu');
                     layerss.appendChild(link);
                 }
+
                 var toggleableLayerIds2 = [ 'Inaccessible Station' ];
  
                 for (var i = 0; i < toggleableLayerIds2.length; i++) {
@@ -535,6 +561,7 @@
                     var layerss = document.getElementById('menu');
                     layerss.appendChild(link2);
                 }
+
                 map.on('moveend', function() {
                     var features = map.queryRenderedFeatures({layers:['Accessible Station']});
  
@@ -573,6 +600,7 @@
                 // Call this function on initialization
                 // passing an empty array to render an empty state
                 renderListings([]);
+
                 // Add the label layer to the map
                 map.addLayer({
                     'id': 'labels',
@@ -590,7 +618,9 @@
                         'text-color': 'rgba(0,0,0,0.6)'
                     }
                 });
+
                 var mypopup = new mapboxgl.Popup({closeButton: false});    
+
                 // Another event listener that adds the popup when the user puts their cursor over the city circles
                 map.on('mouseover', 'Accessible Station', function (e) {
                     mypopup
@@ -598,15 +628,18 @@
                         .setHTML("<h3>" + e.features[0].properties.Station + "</h3>Ramp Train Access: " + e.features[0].properties.RampTrainA + "<br />PRM Setdown: " + e.features[0].properties.PRMSetdown + "<br />Wheelchairs Available: " + e.features[0].properties.Wheelchair + "<br />Step Free Access Note: " + e.features[0].properties.StepFree_1)
                         .addTo(map);
                 });
+
                 // Change the cursor to a pointer when the mouse is over the cities layer.
                 map.on('mouseenter', 'Accessible Station', function () {
                     map.getCanvas().style.cursor = 'pointer';
                 });
+
                 // Change it back to a pointer when it leaves and remove the popup window.
                 map.on('mouseleave', 'Accessible Station', function () {
                     map.getCanvas().style.cursor = '';
                     mypopup.remove();
                 });
+
                 // Another event listener that adds the popup when the user puts their cursor over the city circles
                 map.on('mouseover', 'Inaccessible Station', function (e) {
                     mypopup
@@ -614,21 +647,26 @@
                         .setHTML("<h3>" + e.features[0].properties.Station + "</h3>Ramp Train Access: " + e.features[0].properties.RampTrainA + "<br />PRM Setdown: " + e.features[0].properties.PRMSetdown + "<br />Wheelchairs Available: " + e.features[0].properties.Wheelchair + "<br />Step Free Access Note: " + e.features[0].properties.StepFree_1)
                         .addTo(map);
                 });
+
                 // Change the cursor to a pointer when the mouse is over the cities layer.
                 map.on('mouseenter', 'Inaccessible Station', function () {
                     map.getCanvas().style.cursor = 'pointer';
                 });
+
                 // Change it back to a pointer when it leaves and remove the popup window.
                 map.on('mouseleave', 'Inaccessible Station', function () {
                     map.getCanvas().style.cursor = '';
                     mypopup.remove();
                 });
+
                 //Event listener for the zoom to buttons created using a for loop and switch case statement to set lat and long
                 var x = document.getElementsByClassName('citylink');
                 var i;
                 for (i = 0; i < x.length; i++) {
                     x[i].addEventListener('click', function(e) {
+
                         var lat,long,zoom;
+
                         switch(e.target.id) {
                             case "birm": long=-1.8904; lat=52.4862; zoom=9; break;
                             case "bris": long=-2.5879; lat=51.4545; zoom=9; break;
@@ -640,6 +678,7 @@
                             case "newc": long=-1.6178; lat=54.9783; zoom=9; break;
                             case "whol": long=-2.294; lat=55.790; zoom=4.32; break;
                         }
+
                         map.flyTo({
                             center: [long,lat],
                             zoom: zoom,
@@ -648,7 +687,9 @@
                         });
                     });
                 }
+
             });
+
             var afterMap = new mapboxgl.Map({
                 container: 'after',
                 style: 'mapbox://styles/sangyuhong/cjv4yk47y2lrx1fofzfcdw8t8',
@@ -656,8 +697,10 @@
                 zoom: 4.32, // starting zoom
                 pitch: 0 // tilt of the viewpoint in degrees
             });
+
             afterMap.on('load', function () {
                 afterMap.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
+
                 afterMap.addLayer({
                     id: 'percentage',
                     type: 'fill',
@@ -680,10 +723,12 @@
                         }}
                 });
             });
+
             var swipe = new mapboxgl.Compare(afterMap, map, {
                 // Set this to enable comparing two maps by mouse movement:
                 // mousemove: true
             });
+
         </script>
  
     </body>
