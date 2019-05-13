@@ -299,71 +299,6 @@ document.getElementById('interventions_2040').addEventListener('click', function
 })
 });
 
-
-
-
-
-// PART 2.
-// Graph creation from json url address
-
-// An empty array is created to host the extracted values
-// var arr = [];
-
-// function readTextFile(file, callback) {
-//     var rawFile = new XMLHttpRequest();
-//     rawFile.overrideMimeType("application/json");
-//     rawFile.open("GET", file, true);
-//     rawFile.onreadystatechange = function() {
-//         if (rawFile.readyState === 4 && rawFile.status == "200") {
-//             callback(rawFile.responseText);
-//         }
-//     }
-//     rawFile.send(null);
-// }
-
-// //The function is called back with the json url
-// readTextFile("https://opendata.camden.gov.uk/resource/ue2p-evqd.json", 
-// function(text){
-//     var data = JSON.parse(text);
-
-// ///////////////////////////////
-
-
-
-// // Looping through the data and selecting the interested arrays
-// for (var i = 0; i < 100; i++) {
-// var x = data[i].tariff;
-// x_replace = x.replace(/[^0-9\.]+/g, "");
-// var x_float = parseFloat(x_replace);
-
-// var y = data[i].parking_spaces;
-// var y_integer = parseInt( y, 10);
-// var y_number = y_integer || 0 
-
-// var z = data[i].maximum_stay;
-
-// // After some other cleaning, the "parking_data" is pushed into the empty array 
-// arr.push(y);
-
-// //The histogram graph uses the array to plot the distribution of parking capacity accross the Camden Borough
-// var trace = 
-// {
-// x: arr,
-// type:'histogram',
-
-// };
-
-// var dataj = [trace];
-// var layout={
-// title:'Distribution of parking capacity - Sample 100',
-// font: {size: 18}
-// }
-
-// Plotly.newPlot('graph', dataj, layout);
-
-// }
-// });
-
 // Interventions 
 
 var interventions = {
@@ -429,9 +364,7 @@ var chapterName = chapterNames[i];
 if (isElementOnScreen(chapterName)) {
 setActiveChapter(chapterName);
 break;
-}
-}
-};
+}}};
  
 var activeChapterName = 'Intro';
 function setActiveChapter(chapterName) {
@@ -449,6 +382,4 @@ function isElementOnScreen(id) {
 var element = document.getElementById(id);
 var bounds = element.getBoundingClientRect();
 return bounds.top < window.innerHeight && bounds.bottom > 0;
-}
-
-; 
+}; 
