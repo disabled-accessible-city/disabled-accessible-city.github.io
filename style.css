@@ -113,7 +113,7 @@ a:visited {
     font-family: "East Sea Dokdo";
     font-size: 10vw;
     font-weight: normal;
-    font-color: black;
+    color: black;
 
     animation: fadeIn 4s;
 }
@@ -127,7 +127,7 @@ a:visited {
     font-family: "Montserrat";
     font-weight: normal;
     font-size: 1.2vw;
-    font-color: black;
+    color: black;
 
     animation-delay: 3s;
     animation: fadeIn 5s;
