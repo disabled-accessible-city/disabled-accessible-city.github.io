@@ -206,36 +206,7 @@
         <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css' type='text/css' />
 
         <nav id="menu"></nav>
-        <div id='after' class='map'></div>
-        <div id='map' class='map'></div>
-    
-        <div class='map-overlay top'>
-            <div class='map-overlay-inner'>
-
-                <h2>Great Britain Disability and Accessibility</h2>
-                <table><tr><td>
-
-                    <input id='layer1' type='radio' name='toggle' value='Den' checked='checked'>
-                    <label for='layer1'>Disabled Population Density &nbsp; &nbsp;</label>
-                    <input id='layer2' type='radio' name='toggle' value='Pro'>
-                    <label for='layer2'>Disabled Population Proportion &nbsp; &nbsp;</label>
-                    </td>
-                    </tr>
-
-                    <tr><td><p class="cityfly">Zoom To: <a href="#" class="citylink" id="birm">Birmingham</a> &nbsp;<a href="#" class="citylink" id="bris">Bristol</a> &nbsp;<a href="#" class="citylink" id="edin">Edinburgh</a> &nbsp;<a href="#" class="citylink" id="leed">Leeds</a> &nbsp;<a href="#" class="citylink" id="live">Liverpool</a> &nbsp;<a href="#" class="citylink" id="lond">London</a> &nbsp;<a href="#" class="citylink" id="manc">Manchester</a> &nbsp;<a href="#" class="citylink" id="newc">Newcastle</a> <br> Back To: <a href="#" class="citylink" id="whol">Great Britain</a></p>
-                        </td></tr>
-                </table>
-                <p class="credit">Data Sources: <a href="https://geoportal.statistics.gov.uk/datasets/local-authority-districts-december-2017-super-generalised-clipped-boundaries-in-great-britain">Great Britain LAD Boundaries</a> &nbsp;<a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/2011censuskeystatisticsandquickstatisticsforelectoraldivisionsandoutputareasinwales">England and Wales Disability Data</a> &nbsp;<a href="https://www.scotlandscensus.gov.uk/bulletin-figures-and-tables">Scotland Disability Data</a>
-                    <br>
-                    <a href="https://www.doogal.co.uk/UkStations.php">Stations Location</a> &nbsp;<a href="https://www.kingqueen.org.uk/rail-station-accessibility-data/">Stations Accessibility Data</a></p>
-
-                <br>Keep 'Accessible Station' layer visible and 'Inaccessible Station' layer invisible, drag the map, search stations in the displayed area.
-                <p><input id='feature-filter' type='text' placeholder='Enter correct stations name to filter results' />
-                    <a id='feature-listing' class='listing'></a>
-                </p>
-            </div>
-        </div>
-
+        
         <div id='den-legend' class='legend' style='display: block;'>
             <h4>Legend / per k㎡</h4>
             <div><span style='background-color: #800026'></span>422</div>
@@ -272,6 +243,36 @@
             <br>
             <div><span style='background-color: #3f7993'></span>Accessible Station</div>
             <div><span style='background-color: #D8D0CD'></span>Inaccessible Station</div>
+        </div>
+        
+        <div id='after' class='map'></div>
+        <div id='map' class='map'></div>
+    
+        <div class='map-overlay top'>
+            <div class='map-overlay-inner'>
+
+                <h2>Great Britain Disability and Accessibility</h2>
+                <table><tr><td>
+
+                    <input id='layer1' type='radio' name='toggle' value='Den' checked='checked'>
+                    <label for='layer1'>Disabled Population Density &nbsp; &nbsp;</label>
+                    <input id='layer2' type='radio' name='toggle' value='Pro'>
+                    <label for='layer2'>Disabled Population Proportion &nbsp; &nbsp;</label>
+                    </td>
+                    </tr>
+
+                    <tr><td><p class="cityfly">Zoom To: <a href="#" class="citylink" id="birm">Birmingham</a> &nbsp;<a href="#" class="citylink" id="bris">Bristol</a> &nbsp;<a href="#" class="citylink" id="edin">Edinburgh</a> &nbsp;<a href="#" class="citylink" id="leed">Leeds</a> &nbsp;<a href="#" class="citylink" id="live">Liverpool</a> &nbsp;<a href="#" class="citylink" id="lond">London</a> &nbsp;<a href="#" class="citylink" id="manc">Manchester</a> &nbsp;<a href="#" class="citylink" id="newc">Newcastle</a> <br> Back To: <a href="#" class="citylink" id="whol">Great Britain</a></p>
+                        </td></tr>
+                </table>
+                <p class="credit">Data Sources: <a href="https://geoportal.statistics.gov.uk/datasets/local-authority-districts-december-2017-super-generalised-clipped-boundaries-in-great-britain">Great Britain LAD Boundaries</a> &nbsp;<a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/2011censuskeystatisticsandquickstatisticsforelectoraldivisionsandoutputareasinwales">England and Wales Disability Data</a> &nbsp;<a href="https://www.scotlandscensus.gov.uk/bulletin-figures-and-tables">Scotland Disability Data</a>
+                    <br>
+                    <a href="https://www.doogal.co.uk/UkStations.php">Stations Location</a> &nbsp;<a href="https://www.kingqueen.org.uk/rail-station-accessibility-data/">Stations Accessibility Data</a></p>
+
+                <br>Keep 'Accessible Station' layer visible and 'Inaccessible Station' layer invisible, drag the map, search stations in the displayed area.
+                <p><input id='feature-filter' type='text' placeholder='Enter correct stations name to filter results' />
+                    <a id='feature-listing' class='listing'></a>
+                </p>
+            </div>
         </div>
 
         <script>
