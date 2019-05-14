@@ -162,6 +162,7 @@ h3 {
     font-family: "Montserrat";
     font-size: 1.3vw;
     font-weight: normal;
+    color: black;
 
     position: relative;
     top: 0px;
@@ -171,6 +172,7 @@ h3 {
 p {
     font-family: "Lato";
     font-size: 0.8vw;
+    color: black;
 
     position: relative;
     margin: 0;
