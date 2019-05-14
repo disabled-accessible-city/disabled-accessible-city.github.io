@@ -89,7 +89,7 @@
 
 .section1 {
     background-size: cover;
-    background-image: url(design/first_page_design.jpg);
+    background-image: url(design/first_page_design.png);
 }
 
 a:link {
@@ -108,10 +108,11 @@ a:visited {
 
 .prjtitle {
     text-align: center;
-    position: relative;
+    position: absolute;
+    right: 16px;
     top: -5%;
     font-family: "East Sea Dokdo";
-    font-size: 10vw;
+    font-size: 5vw;
     font-weight: normal;
     color: black;
 
@@ -120,7 +121,8 @@ a:visited {
 
 .prjintro {
     text-align: center;
-    position: relative;
+    position: absolute;
+    right: 16px;
     top: 10px;
     width:70%;
     margin:auto;
