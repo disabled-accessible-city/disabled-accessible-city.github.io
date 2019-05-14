@@ -256,7 +256,7 @@ map.addLayer({
                 .setLngLat(e.lngLat)
                 .setHTML(
                   "<h3>" + e.features[0].properties.name 
-                  + "<br/> "+  "<embed src='https://www.new-bailey.com/#sectionTheDevelopment' width=500 height=500>"
+                  + "<br/> "+  "<embed src='http://www.new-bailey.com/brochure-two-new-bailey-square/Two-New-Bailey-Square-non-Interactive-PDF.pdf' width=500 height=500 type='application/pdf'>"
   
                   //  e.features[0].properties.Descritpti + "m<br />2010: " 
                   )
