@@ -93,7 +93,7 @@
 }
 
 a:link {
-    color: white;
+    color: black;
 }
 
 a:visited {
@@ -207,7 +207,7 @@ p {
     padding-bottom: 5px;
     border-radius: 3px;
 
-    background-color: black;
+    background-color: white;
     text-align: left;
 }
 
@@ -231,7 +231,7 @@ p {
     text-align: left;
     top: 20%;
     left: 40%;
-    color: white;
+    color: black;
 }
 
 /*Page2 elements*/
