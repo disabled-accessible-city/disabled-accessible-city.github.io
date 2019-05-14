@@ -1,278 +1,195 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 
+    <!--META & TITLE-->
+    <meta charset="utf-8">
+    <title>Disabled Accessibility City</title>
 
-    <meta charset="UTF-8">
-    <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
-    <script language="javascript" src="libraries/p5.dom.js"></script>
-    <script language="javascript" src="libraries/p5.sound.js"></script>
-    <script language="javascript" type="text/javascript" src="libraries/quicksettings.js"></script>
-    <script language="javascript" type="text/javascript" src="libraries/p5.gui.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mappa-mundi/dist/mappa.min.js" type="text/javascript"></script>
-    <script language="javascript" type="text/javascript" src="sketch.js"></script>
-    <link rel="stylesheet" href="style.css" />
+    <!--FULLPAGE-->
+    <link rel="stylesheet" type="text/css" href="https://alvarotrigo.com/fullPage/jquery.fullPage.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://alvarotrigo.com/fullPage/jquery.fullpage.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+    <!--STYLE SHEET-->
+    <link rel="stylesheet" href="style.css">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=East Sea Dokdo' rel='stylesheet'>
 
 
-    
-<meta charset='utf-8' />
-<title>Manchester-Accessible-Strategy</title>
-<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
-<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
-
-
-
-<script type = "text/javascript" src = "https://d3js.org/d3.v4.min.js"></script>
-<script type='text/javascript' src='http://code.jquery.com/jquery-1.10.2.min.js?ver=1.10.2'></script> 
-
-
-<style>
-#map { position:absolute; top:0; bottom:0; width:100%; }
-</style>
-
+    <script>
+        //fullPage settings
+        $(function() {
+            $('#myPage').fullpage({
+                sectionsColor: ['#353535', '#353535', '#353535', '#353535', '#353535', '#353535'], // page background
+                anchors: ['page1', 'page2', 'page3', 'page4', 'page5', 'page6'],
+                menu: '#menu',
+            });
+        });
+    </script>
 </head>
 
 <body>
 
- <style>
- body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, Sans-serif;
-}
-
-/* Navigator bar css code ///////////////////////////////////////////////// */
-h1 {
-  font-size:40px;
-  line-height: 30px;
-  margin: 0%
-}
-
-h2 {
-  font-size: 20px;
-  line-height: 20px;
-  margin-bottom: 10px;
-}
-
-a {
-  text-decoration: none;
-  color: rgb(34, 54, 145);
-}
-
-center {
-  width: 120px;
-}
-
-#selector_2020-2040 {
-background: #fff;
-position: absolute;
-z-index: 1;
-top: 10px;
-left: 50%;
-border-radius: 3px;
-width: 120px;
-border: 1px solid rgba(0,0,0,0.4);
-font-family: 'Open Sans', sans-serif;
-}
+    <!--NAVIGATION TABS-->
+    <!--free icons from: https://www.flaticon.com-->
+    <ul id="menu">
+        <li data-menuanchor="page1" class="active"><a href="#page1" title="Top"><img src="media/icon_1.png"></a></li>
+        <li data-menuanchor="page2"><a href="#page2" title="Site Map"><img src="media/icon_2.png"></a></li>
+        <li data-menuanchor="page3"><a href="#page3" title="TFL"><img src="media/icon_3.png"></a></li>
+        <li data-menuanchor="page4"><a href="#page4" title="Yelp"><img src="media/icon_4.png"></a></li>
+        <li data-menuanchor="page5"><a href="#page5" title="Footfall"><img src="media/icon_5.png"></a></li>
+        <li data-menuanchor="page6"><a href="#page6" title="Twitter"><img src="media/icon_6.png"></a></li>
+        <li onclick="on()"><img src="media/icon_7.png" title="About"></li>
+    </ul>
 
 
+    <!-- PAGES -->
+    <div id="myPage">
 
-#navigationBar {
-  position: absolute;
-  width: 250px;
-  margin: 10px;
-  padding: 15px 20px;
-  background-color: grey;
-  opacity:0.85;
-}
-
-
-/* Graph css code ///////////////////////////////////////////////// */
-#graph{
-padding: 10px;
-position: relative; 
-width: 700px;
-height: 350px;
-}
-
-/* Legend and slidebar css code ///////////////////////////////////////////////// */
-.legend {
-  margin: 10px;
-}
-
-.sliderbar{
-margin: 10px;
-}
-
-.row {
-  height: 20px;
-  width: 100%;
-}
-
-.colors {
-  background: linear-gradient(to right, 
-#dfdada, #bfff00, #ffff00, #ffbf00, #ff4000);
-}
-
-.label {
-  width: 16%;
-  display: inline-block;
-  text-align: center;
-}
-
-.rectangle {
-  height: 15px;
-  width: 30px;
-  background-color: #0ac2c2;
-  display: inline-block;
-  opacity:0.4;
-}
+        <!-- Page1: INTRO-->
+        <div class="section section1">
+            <div class="prjtitle">Disabled Accessibility City</div>
+            <div class="prjintro">The night-time economy is fundamental for London’s success as a global city. The visualisations aim to explore the pulse of the night-time economy at different scales. By exploring how these patterns interact and influence one another, we hope to understand it better as a whole.</div>
+            <img src="Design/First Page Design.jpg" alt="Scroll down" class="downarrow" title="Scroll down to explore!">
+        </div>
 
 
-#map {
-position: fixed;
-width:75%;
-}
-#features {
-width: 25%;
-margin-left: 75%;
-font-family: sans-serif;
-overflow-y: scroll;
-background-color: #fafafa;
-}
-section {
-padding:  25px 50px;
-line-height: 25px;
-border-bottom: 1px solid #ddd;
-opacity: 0.25;
-font-size: 13px;
-}
-section.active {
-opacity: 1;
-}
-section:last-child {
-border-bottom: none;
-margin-bottom: 200px;
-}
+        <!-- Page2: STORY-->
+        <div class="section section2">
+            <ul id="items">
+                <li><img src="media/icon_3w.png">
+                    <div class="subtitles">
+                        <h3>Current Status</h3>
+                        <p>What is the gap between disability and accessibility in Great Britain?</p>
+                    </div>
+                </li>
+                <li><img src="media/icon_4w.png">
+                    <div class="subtitles">
+                        <h3>Disability and Work</h3>
+                        <p>How do disabled people work in London in the past?</p>
+                    </div>
+                </li>
+                <li><img src="media/icon_5w.png">
+                    <div class="subtitles">
+                        <h3>Accessibility and Life</h3>
+                        <p>Where can disabled people go in London in the present?</p>
+                    </div>
+                </li>
+                <li><img src="media/icon_6w.png">
+                    <div class="subtitles">
+                        <h3>Future Imagination</h3>
+                        <p>What can disabled people do in Manchester in the future?</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
-.legend {
-    background-color: rgba(150,150,150,0.8);  
-    border-radius: 3px;
-    bottom: 40px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.10);
-    font: 12px/20px 'Open Sans', sans-serif;
-    color: #fff;
-    padding: 10px;
-    position: absolute;
-    right: 20px;
-    z-index: 1;
-}
-.legend h4 {
-    margin: 0 0 5px;
-    font-size: 18px
-}
-.legend div span {
-    border-radius: 50%;
-    display: inline-block;
-    height: 10px;
-    margin-right: 10px;
-    width: 10px;
-}
 
- </style>
+        <!-- Page3: GB D&A-->
+        <div class="section section3 fp-section fp-table" data-anchor="page3" style="height: 574px; background-color: rgb(53, 53, 53);"><div class="fp-tableCell" style="height: 574px;">
+
+            <!--TITLE-->
+
+
+            <!--MAP-->
+            <iframe id="tfl" src="https://github.com/disabled-accessible-city/disabled-accessible-city.github.io/blob/master/GB%20Disability%20%26%20Accessibility/Great%20Britain%20Disability%20and%20Accessibility.html" height="100%" width="100%" frameborder="0" scrolling="no"></iframe>
+        </div></div>
+
+
+        <!-- Page4: YELP-->
+        <div class="section section4">
+
+            <!--TITLE-->
+            <div class="overlay">
+                <h3>Night business clusters over time</h3>
+                <p>Data source: <a href="https://www.yelp.com/developers/documentation/v3" target="_blank">Yelp data API</a></p>
+            </div>
+
+            <!--MAP-->
+            <iframe src="yelp/index.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+
+        </div>
+
+
+        <!-- Page5: FOOTFALL-->
+        <div class="section section5">
+
+            <!--TITLE-->
+            <div class="overlay">
+                <h3>Footfall in Central London</h3>
+                <p>Data source: <a href="https://data.cdrc.ac.uk/dataset/local-data-company-ucl-smartstreetsensor-footfall-data-research-aggregated-data" target="_blank">CDRC: UCL SmartStreetSensor Footfall Data</a></p>
+            </div>
+
+            <!--VIDEO1-->
+            <div class="slide">
+            <iframe src="footfall/footfall.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+            </div>
+            
+            <!--VIDEO2-->
+            <div class="slide">
+            <iframe src="footfall/footfall2.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+            </div>
+            
+            <!--VIDEO3-->
+            <div class="slide">
+            <iframe src="footfall/footfall3.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+            </div>
+        </div>
 
 
 
+        <!-- Page6: TWITTER-->
+        <div class="section section6">
 
-<div id='map'>
+            <!--TITLE-->
+            <div class="overlay">
+                <h3>Night tweets clustering, weekday vs. weekend</h3>
+                <p>Data source: <a href="https://developer.twitter.com/" target="_blank">Twitter data API</a></p>
+            </div>
+            
+            <!--CLUSTER MAP-->
+            <div class="slide">
+                <iframe src="twitter/twtcluster/tweet-cluster.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+            </div>
+            
+            <!--TWITTER TOPIC MODELLING-->
+            <div class="slide">
+                <iframe src="twitter/twt-topic/twt-topic.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+            </div>
 
-  <div id='state-legend' class='legend'>
-    <h4>Intervention Areas</h4>
-    <div><span style='background-color: #ff0000'></span>Train Line</div>
-    <div><span style='background-color: #8000ff'></span>Metrolink</div>
-    <div><span style='background-color: #4CAF50'></span>Ashton Interchange Development</div>
-    <div><span style='background-color: #ff8000'></span>Carrington Relief Road</div>
-    <div><span style='background-color: #00ff00'></span>Train Stations</div>
-    <div><span style='background-color: #D8A500'></span>New Bailey Development</div>
-    <div><span style='background-color: #AD8F2C'></span>Stockport Interchange Redevelopment</div>
-    </div>
-
-</div>
-
-
-<nav id = 'selector_2020-2040'></nav>
-
-<div id='navigationBar'>
-  <h2 href="https://downloads.ctfassets.net/nv7y93idf4jq/7FiejTsJ68eaa8wQw8MiWw/bc4f3a45f6685148eba2acb618c2424f/03._GM_2040_TS_Full.pdf">Greater Manchester Vision 2040</h2>
-  <iframe width="250" height="407" src="https://www.youtube.com/embed/cl6fiVWFNTY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-  </iframe>
-  <h2>Elements of the strategy:</h2>
-    <p>1. Integrated – allow customers to move seamlessly between modes and services</p>
-    <h2>2. Inclusive – provide accessible and affordable transport</h2>
-    <p>3. Healthy – promote walking and cycling for local trips</p>
-    <p>4. Reliable – give customers confidence in journey times</p>
-    <p>5. Safe and secure – reduce road accidents and deaths</p>
-    <p>6. Well maintained and resilient – able to withstand unexpected events and weather conditions</p>
-    <embed src="https://downloads.ctfassets.net/nv7y93idf4jq/1W2LPpKzCQCswygYyukIwm/05c300a3d59a3147ad7a51c5b8c28188/2-17-0078-GM-2040-Full-Strategy-Document.pdf" 
-           width="100%" height="300px" type="application/pdf" allowfullscreen="allowfullscreen">
-    
-  </div>
-
-<div id='features'>
-  <section id='Intro'  class='active'>
-      <h3>Future Interventions for Accessibility - Manchester Transport Strategy 2040 </h3>
-        <img src = 'https://images.ctfassets.net/nv7y93idf4jq/3tVZgGL6MwWcEIqm2qQ6EO/91a6f20885631efd8a42c5e849aa8938/Contact-Us-Large-Content-1.jpg' width="300">
-      <p>‘World	class	connections	that	support	long-term,	
-          sustainable	economic	growth	and <b>access</b>	to	opportunity	for	all’.	 Our	approach	to	achieving	this	was	
-          set	out	in	the	‘Greater	Manchester	2040	Transport	Strategy:	Our	Vision’. </p>
-      </section>
-  <section id='Rail'>
-  <h3>Rail Station Accessibility Programme to deliver accessibility improvements at rail stations </h3>
-      <img src = 'https://images.ctfassets.net/nv7y93idf4jq/1qNZgSI3e0yygs4yCuQAoY/8ab9704d42edac39e61c557b1452c56f/Greater_Manchester_Rail_Tickets_Area_Map_Jan_2019.jpg' width="300">
-  <p>To maximise existing rail assets to provide better facilities, improve transport integration and deliver community benefits. </p>
-  </section>
-  <section id='Ashton_Interchange'>
-  <h3>Ashton Interchange redevelopment</h3>
-  <img src = 'https://images.ctfassets.net/nv7y93idf4jq/376x0zfQr6QGqoIYkEg2EG/b384efc1ff845b3963beb1d813a61b3e/18-0748_Tameside_Bus_Station_closure_map-WEB.jpg' width="300">
-  <p>To increase the accessibility of Metrolink, bus and rail from nearby destinations, and increase the attractiveness of the Interchange as the focal point for intra-urban growth in Ashton town centre.</p>
-  </section>
-  <section id='Carrington'>
-  <h3>Carrington Relief Road </h3>
-  <img src = 'https://www.futurecarrington.com/wp-content/uploads/2016/02/home_slide1.png' width = '300'>
-  <p>To support growth in the Carrington area by improving accessibility to new developments. </p>
-  </section>
-  <section id='Metrolink'>
-  <h3>Metrolink Improvement</h3>
-  <img src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Metrolink_map_proposals.svg/1024px-Metrolink_map_proposals.svg.png' width = '300'>
-  <p>Additional Metrolink vehicles (27 new trams) and associated infrastructure - enabling the use of more double unit vehicles between Bury and Altrincham, and Shaw and East Didsbury. To increase Metrolink capacity into and through the Regional Centre, in order to facilitate continuing economic growth and access to services and encourage mode shift.   "</p>
-  </section>
-  <section id='Mill_Hill_Rail'>
-  <h3>Station accessibility improvements at Mills Hill</h3>
-  <p>To maximise existing rail assets to provide better facilities, particularly for passengers with limited mobility. </p>
-  </section>
-  <section id='New_baley'>
-  <h3>City Centre Salford infrastructure improvement: New Bailey</h3>
-  <img src = 'https://www.new-bailey.com/wp-content/themes/newbailey/images/whatsNearMap.jpg' width = '300'>
-  <p>To support the redevelopment and growth of Central Salford by delivering public realm and environmental improvements, alongside enhancements to public transport access and improvements to bus reliability."</p>
-  </section>
-  <section id='Stock_Port_Interchange'>
-  <h3>Stockport Interchange redevelopment </h3>
-  <img src = 'https://images.ctfassets.net/nv7y93idf4jq/51TAUCqB16e4WAgMscSWsg/12bb304b14cd0637e0581a07e69ce664/Stockport_plan_and_map_key.jpg' width = '300'>
-  <p>Holmes and Watson head to The Daily Telegraph and place an ad to draw out the criminal. It reads: "To-night. Same hour. Same place. Two taps. Most vitally important. Your own safety at stake. Pierrot." The trap works and Holmes catches the criminal: Colonel Valentine Walter, the brother of Woolwich Arsenal's chief. He confesses to working for Hugo Oberstein to obtain the submarine plans in order to pay off his debts.</p>
-  </section>
-  <section id='Stock_Port_Town_Acces'>
-  <h3>Stockport Town Centre Access Plan</h3>
-  <p>To tackle congestion in and around Stockport town centre and remove barriers to movement for all modes.</p>
-  <small id="citation">
-  Adapted from <a href='https://docs.mapbox.com/mapbox-gl-js/example/scroll-fly-to/'>MapBox</a>
-  </small>
-  </section>
+        </div>
     </div>
 
 
-<script type = "text/javascript" src="script.js"></script>
+    <!-- ABOUT -->
+    <div id="about" onclick="off()">
+        <div id="aboutText">
+            <h3>London Night Rhythms</h3>
+            <br/>
+
+            <p>
+                <br/>Creators : Kahina Ait ouazzou, Shan Yi See, Gregory Slater, Dan Qin
+                <br/>Map engine : <a href="https://www.mapbox.com/" target="_blank">Mapbox GL JS</a>
+                <br/>Github : <a href="https://github.com/london-rhythms/london-rhythms.github.io" target="_blank">@london-rhythms</a>
+                <br/>
+                <br/>@ 2019 CASA, University College London</p>
+        </div>
+    </div>
+
+    <!-- ABOUT/CLICK EVENTS -->
+    <script>
+        function on() {
+            document.getElementById("about").style.display = "block";
+        }
+        function off() {
+            document.getElementById("about").style.display = "none";
+        }
+    </script>
 
 </body>
+
 </html>
