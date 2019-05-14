@@ -119,7 +119,7 @@
                 font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
                 padding: 10px;
                 position: absolute;
-                right: 40px;
+                right: 10px;
                 z-index: 1;
             }
  
@@ -140,7 +140,7 @@
                 position: absolute;
                 z-index: 1;
                 top: 10px;
-                right: 40px;
+                right: 10px;
                 border-radius: 3px;
                 width: 120px;
                 border: 1px solid rgba(0,0,0,0.4);
@@ -268,7 +268,7 @@
                     <br>
                     <a href="https://www.doogal.co.uk/UkStations.php">Stations Location</a> &nbsp;<a href="https://www.kingqueen.org.uk/rail-station-accessibility-data/">Stations Accessibility Data</a></p>
 
-                <br>Keep 'Accessible Station' layer visible and 'Inaccessible Station' layer invisible, drag the map, search stations in the displayed area.
+                <br>Keep at least one of 'Accessible Station' and 'Inaccessible Station' layer visible, drag the map, search stations in the displayed area. After each update of the layer settings, please re-drag the map to populate the updated results.
                 <p><input id='feature-filter' type='text' placeholder='Enter correct stations name to filter results' />
                     <a id='feature-listing' class='listing'></a>
                 </p>
@@ -326,7 +326,7 @@
                     filterEl.parentNode.style.display = 'none';
  
                     // remove features filter
-                    map.setFilter('Accessible Station', ['has', 'Station']);
+                    map.setFilter(['Accessible Station', 'Inaccessible Station'], ['has', 'Station']);
                 }
             }
  
@@ -422,9 +422,9 @@
                     type: 'circle',
                     source: {
                         type: 'vector',
-                        url: 'mapbox://sangyuhong.1ltxz60g' // Mapbox tileset Map ID
+                        url: 'mapbox://sangyuhong.chzmsio7' // Mapbox tileset Map ID
                     },
-                    'source-layer': 'UKStationData-aoqoy4', // name of tilesets
+                    'source-layer': 'UKStationAccess-1dapmq', // name of tilesets
                     'layout': {
                         'visibility': 'visible'
                     },
@@ -465,9 +465,9 @@
                     type: 'circle',
                     source: {
                         type: 'vector',
-                        url: 'mapbox://sangyuhong.1ltxz60g' // Mapbox tileset Map ID
+                        url: 'mapbox://sangyuhong.29tj1iba' // Mapbox tileset Map ID
                     },
-                    'source-layer': 'UKStationData-aoqoy4', // name of tilesets
+                    'source-layer': 'UKStationInaccess-4go8j1', // name of tilesets
                     'layout': {
                         'visibility': 'none'
                     },
@@ -564,7 +564,7 @@
                 }
 
                 map.on('moveend', function() {
-                    var features = map.queryRenderedFeatures({layers:['Accessible Station']});
+                    var features = map.queryRenderedFeatures({layers:['Accessible Station', 'Inaccessible Station']});
  
                     if (features) {
                         var uniqueFeatures = getUniqueFeatures(features, "Station");
@@ -594,6 +594,9 @@
  
                     // Set the filter to populate features into the layer.
                     map.setFilter('Accessible Station', ['match', ['get', 'Station'], filtered.map(function(feature) {
+                        return feature.properties.Station;
+                    }), true, false]);
+                    map.setFilter('Inaccessible Station', ['match', ['get', 'Station'], filtered.map(function(feature) {
                         return feature.properties.Station;
                     }), true, false]);
                 });
@@ -626,7 +629,7 @@
                 map.on('mouseover', 'Accessible Station', function (e) {
                     mypopup
                         .setLngLat(e.features[0].geometry.coordinates)
-                        .setHTML("<h3>" + e.features[0].properties.Station + "</h3>Ramp Train Access: " + e.features[0].properties.RampTrainA + "<br />PRM Setdown: " + e.features[0].properties.PRMSetdown + "<br />Wheelchairs Available: " + e.features[0].properties.Wheelchair + "<br />Step Free Access Note: " + e.features[0].properties.StepFree_1)
+                        .setHTML("<h3>" + e.features[0].properties.Station + "</h3>Induction Loop: " + e.features[0].properties.InductionL + "<br />Ramp Train Access: " + e.features[0].properties.RampTrainA + "<br />PRM Setdown: " + e.features[0].properties.PRMSetdown + "<br />Wheelchairs Available: " + e.features[0].properties.Wheelchair + "<br />Step Free Access Note: " + e.features[0].properties.StepFree_1)
                         .addTo(map);
                 });
 
@@ -645,7 +648,7 @@
                 map.on('mouseover', 'Inaccessible Station', function (e) {
                     mypopup
                         .setLngLat(e.features[0].geometry.coordinates)
-                        .setHTML("<h3>" + e.features[0].properties.Station + "</h3>Ramp Train Access: " + e.features[0].properties.RampTrainA + "<br />PRM Setdown: " + e.features[0].properties.PRMSetdown + "<br />Wheelchairs Available: " + e.features[0].properties.Wheelchair + "<br />Step Free Access Note: " + e.features[0].properties.StepFree_1)
+                        .setHTML("<h3>" + e.features[0].properties.Station + "</h3>Induction Loop: " + e.features[0].properties.InductionL + "<br />Ramp Train Access: " + e.features[0].properties.RampTrainA + "<br />PRM Setdown: " + e.features[0].properties.PRMSetdown + "<br />Wheelchairs Available: " + e.features[0].properties.Wheelchair + "<br />Step Free Access Note: " + e.features[0].properties.StepFree_1)
                         .addTo(map);
                 });
 
