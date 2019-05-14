@@ -109,7 +109,7 @@ a:visited {
 .prjtitle {
     text-align: center;
     position: relative;
-    right: -30%;
+    right: -20%;
     top: 5%;
     font-family: "East Sea Dokdo";
     font-size: 4vw;
@@ -122,8 +122,8 @@ a:visited {
 .prjintro {
     text-align: center;
     position: relative;
-    right: -30%;
-    top: 5px;
+    right: -20%;
+    top: 10%;
     width:55%;
     margin:auto;
     font-family: "Montserrat";
