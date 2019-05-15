@@ -89,7 +89,7 @@
 
 .section1 {
     background-size: cover;
-    background-image: url(design/first_page_design.png);
+    background-image: url(design/wheelchair.jpg);
 }
 
 a:link {
@@ -109,10 +109,9 @@ a:visited {
 .prjtitle {
     text-align: center;
     position: relative;
-    right: -16%;
-    top: 12%;
+    top: -5%;
     font-family: "East Sea Dokdo";
-    font-size: 4vw;
+    font-size: 10vw;
     font-weight: normal;
     color: black;
 
@@ -122,13 +121,12 @@ a:visited {
 .prjintro {
     text-align: center;
     position: relative;
-    right: -16%;
-    top: 13.5%;
-    width:62%;
+    top: 10px;
+    width:70%;
     margin:auto;
     font-family: "Montserrat";
     font-weight: normal;
-    font-size: 1vw;
+    font-size: 1.2vw;
     color: black;
 
     animation-delay: 3s;
@@ -213,7 +211,7 @@ p {
     padding-bottom: 5px;
     border-radius: 3px;
 
-    background-color: white;
+    background-color: #dddddd;
     text-align: left;
 }
 
