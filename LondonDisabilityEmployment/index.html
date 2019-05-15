@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- Template by quackit.com -->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>2 Column Frames Layout &mdash; Left Menu</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+		<link href='https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/13.1.5/nouislider.min.css' rel='stylesheet' />
+
+		<link rel="stylesheet" href="style.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+		<script src='https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js'></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/13.1.5/nouislider.min.js'></script>
+		<script src="script.js"></script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4 sidebar"> 
+					<div class="information-area">
+						<h2>London Disabled Employment Statistics</h2>
+						<p class="credit">Data: <a href="https://data.london.gov.uk/dataset/employment-rates-by-disability">Employment Rates by Disability, Office for Nat. Statistics. Cartography</a></p>
+					</div>
+					<div class="information-area">
+						<h3>Location</h3>
+						<div id="location-name"></div>
+						<div id="location-code"></div>
+					</div>
+					<div class="chart-area">
+						<canvas id="canvas"></canvas>
+					</div>
+				</div>
+				<div class="col-md-8 main-area"> 
+					<div class="controls">
+						<form class="form-inline">
+							<label class="radio-inline">
+								<input type="radio" class="inlineRadioOptions" name="inlineRadioOptions" value="Employed_Disabled" checked="checked"> Disabled and Employed
+							</label>
+							<label class="radio-inline">
+								<input type="radio" class="inlineRadioOptions" name="inlineRadioOptions" value="UnEmployed_Disabled"> Disabled and Unemployed
+							</label>
+						</form>
+					</div>
+					<div class="map-area">
+						<div id="year-slider"></div>
+						<div id="map"></div>
+						<div class='map-overlay' id='legend'></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,85 @@
+/* LAYOUT */
+html,body{height:100%;}
+.container-fluid {height:100%;}
+.row {height: 100%;}
+.main-area{min-height:100%; padding: 0;}
+
+/* CONTENT */
+.map-area {
+    min-height:100%;
+}
+.sidebar {
+    color: #fff;
+    min-height:100%;
+    background: #88b0c8;
+    display: flex;
+    flex-direction: column;
+}
+.controls {
+    position: absolute; 
+    width: 100%;
+    padding: 30px;
+    z-index: 1;
+    text-align: center;
+}
+.title-area {
+    flex: 0.15;
+}
+.information-area {
+    flex: 0.70;
+}
+.chart-area {
+    flex: 0.15;
+}
+#year-slider {
+    height: 200px;
+    position: absolute;
+    right: 20px;
+    top: 40px;
+    z-index: 2;
+}
+#year-slider .noUi-handle {
+    background: #88b0c8;
+    box-shadow: none;
+}
+#year-slider .noUi-handle:focus {
+    outline: none;
+}
+#year-slider .noUi-tooltip {
+    background: none;
+    border: none;
+}
+#map { 
+    position:absolute; 
+    top:0; 
+    bottom:0; 
+    width:100%;
+}
+
+.map-overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.8);
+  margin-right: 20px;
+  font-family: Arial, sans-serif;
+  overflow: auto;
+  border-radius: 3px;
+}
+
+#legend {
+  padding: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  line-height: 18px;
+  height: 200px;
+  margin-bottom: 40px;
+  width: 100px;
+}
+
+.legend-key {
+  display: inline-block;
+  border-radius: 20%;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+}
