@@ -89,7 +89,7 @@
 
 .section1 {
     background-size: cover;
-    background-image: url(design/wheelchair.jpg);
+    background-image: url(design/DisabledAccessible.jpg);
 }
 
 a:link {
@@ -211,7 +211,7 @@ p {
     padding-bottom: 5px;
     border-radius: 3px;
 
-    background-color: #dddddd;
+    background-color: #c0c0c0;
     text-align: left;
 }
 
