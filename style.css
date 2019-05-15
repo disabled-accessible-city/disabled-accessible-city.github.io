@@ -89,7 +89,7 @@
 
 .section1 {
     background-size: cover;
-    background-image: url(design/DisabledAccessible.jpg);
+    background-image: url(design/first_page_design.png);
 }
 
 a:link {
@@ -109,9 +109,10 @@ a:visited {
 .prjtitle {
     text-align: center;
     position: relative;
-    top: -5%;
+    right: -16%;
+    top: 12%;
     font-family: "East Sea Dokdo";
-    font-size: 10vw;
+    font-size: 4vw;
     font-weight: normal;
     color: black;
 
@@ -121,12 +122,13 @@ a:visited {
 .prjintro {
     text-align: center;
     position: relative;
-    top: 10px;
-    width:70%;
+    right: -16%;
+    top: 13.5%;
+    width:62%;
     margin:auto;
     font-family: "Montserrat";
     font-weight: normal;
-    font-size: 1.2vw;
+    font-size: 1vw;
     color: black;
 
     animation-delay: 3s;
@@ -211,7 +213,7 @@ p {
     padding-bottom: 5px;
     border-radius: 3px;
 
-    background-color: #c0c0c0;
+    background-color: white;
     text-align: left;
 }
 
