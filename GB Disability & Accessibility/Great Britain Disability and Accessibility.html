@@ -316,6 +316,10 @@
                                 .setText(feature.properties.Station)
                                 .addTo(map);
                         });
+                        item.addEventListener('mouseleave', function() {
+                            map.getCanvas().style.cursor = '';
+                            popup.remove();
+                        });
                         listingEl.appendChild(item);
                     });
  
