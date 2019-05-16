@@ -333,7 +333,8 @@
                     filterEl.parentNode.style.display = 'none';
  
                     // remove features filter
-                    map.setFilter(['Accessible Station', 'Inaccessible Station'], ['has', 'Station']);
+                    map.setFilter('Accessible Station', ['has', 'Station']);
+                    map.setFilter('Inaccessible Station', ['has', 'Station']);
                 }
             }
  
