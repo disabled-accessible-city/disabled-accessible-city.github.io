@@ -42,16 +42,22 @@
             .map-overlay label {
                 font: 18px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
                 display: block;
-                vertical-align: middle;
+                vertical-align: bottom;
                 margin: 0 0 0 10px;
                 padding: 0;
             }
-
-            .map-overlay label2 {
-                font: 13px/15px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-                vertical-align: bottom;
-                margin: 0;
-                padding: 0;
+            
+            
+            .map-overlay tog1 {
+                position: absolute;
+                top: 55px;
+                right: -40px;
+            }
+            
+            .map-overlay tog2 {
+                position: absolute;
+                top: 95px;
+                right: -40px;
             }
 
             .map-overlay .legend .bar {
@@ -256,11 +262,12 @@
 
                 <h2>Great Britain Disability and Accessibility</h2>
                 <table><tr><td>
-
-                    <input id='layer1' type='radio' name='toggle' value='Den' checked='checked'>
-                    <label for='layer1'>Disabled Population Density &nbsp;</label>
-                    <input id='layer2' type='radio' name='toggle' value='Pro'>
-                    <label for='layer2'>Disabled Population Proportion &nbsp;</label>
+                    
+                    <label for='layer1'>Disabled Population Density</label>
+                    <tog1><input id='layer1' type='radio' name='toggle' value='Den' checked='checked'></tog1>
+                    <br>
+                    <label for='layer2'>Disabled Population Proportion</label>
+                    <tog2><input id='layer2' type='radio' name='toggle' value='Pro'></tog2>                    
                     </td>
                     </tr>
 
