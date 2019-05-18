@@ -87,12 +87,14 @@
             .map-overlay p.lim {
                 margin: 0;
                 padding: 0;
-                max-height: 100px;
             }
 
             .map-overlay .listing {
-                overflow: auto;
-                max-height: 100%;
+                overflow: scroll;
+                position: absolute;
+                width: 91%;
+                max-height: 100px;
+                background-color: rgba(225, 225, 225, 1);
             }
  
             .map-overlay .listing > * {
