@@ -21,7 +21,7 @@
             }
 
             .map-overlay .map-overlay-inner {
-                background-color: rgba(150,150,150,0.8);
+                background-color: rgba(196,196,196,0.8);
                 box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
                 border-radius: 3px;
                 padding: 10px;
@@ -40,24 +40,28 @@
             }
 
             .map-overlay label {
-                font: 18px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-                display: block;
-                vertical-align: middle;
+                font: 17px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+                display: block;                
+                vertical-align: left;
                 margin: 0 0 0 10px;
                 padding: 0;
             }
             
+            .map-overlay tex {
+                position: absolute;                
+                left: 60px;
+            }
             
             .map-overlay tog1 {
                 position: absolute;
-                top: 55px;
-                right: -40px;
+                top: 53px;
+                right: 240px;
             }
             
             .map-overlay tog2 {
                 position: absolute;
-                top: 95px;
-                right: -40px;
+                top: 73px;
+                right: 240px;
             }
 
             .map-overlay .legend .bar {
@@ -118,7 +122,7 @@
             }
 
             .legend {
-                background-color: rgba(150,150,150,0.8);
+                background-color: rgba(196,196,196,0.8);
                 border-radius: 3px;
                 bottom: 20px;
                 width: 126px;
@@ -143,7 +147,7 @@
             }
 
             #menu {
-                background: #fff;
+                background: rgba(196,196,196,0.8);
                 position: absolute;
                 z-index: 1;
                 top: 10px;
@@ -171,7 +175,7 @@
             }
  
             #menu a:hover {
-                background-color: #f8f8f8;
+                background-color: rgba(169,169,169,0.8);
                 color: #404040;
             }
  
@@ -263,15 +267,15 @@
                 <h2>Great Britain Disability and Accessibility</h2>
                 <table><tr><td>
                     
-                    <label for='layer1'>Disabled Population Density</label>
+                    <tex><label for='layer1'>Disabled Population Density</label></tex>
                     <tog1><input id='layer1' type='radio' name='toggle' value='Den' checked='checked'></tog1>
                     <br>
-                    <label for='layer2'>Disabled Population Proportion</label>
-                    <tog2><input id='layer2' type='radio' name='toggle' value='Pro'></tog2>                    
+                    <tex><label for='layer2'>Disabled Population Proportion</label></tex>
+                    <tog2><input id='layer2' type='radio' name='toggle' value='Pro'></tog2>
                     </td>
-                    </tr>
+                    </tr>                    
 
-                    <tr><td><p class="cityfly">Zoom To: <a href="#" class="citylink" id="birm">Birmingham</a> &nbsp;<a href="#" class="citylink" id="bris">Bristol</a> &nbsp;<a href="#" class="citylink" id="edin">Edinburgh</a> &nbsp;<a href="#" class="citylink" id="leed">Leeds</a> &nbsp;<a href="#" class="citylink" id="live">Liverpool</a> &nbsp;<a href="#" class="citylink" id="lond">London</a> &nbsp;<a href="#" class="citylink" id="manc">Manchester</a> &nbsp;<a href="#" class="citylink" id="newc">Newcastle</a> <br> Back To: <a href="#" class="citylink" id="whol">Great Britain</a></p>
+                    <tr><td><br><p class="cityfly">Zoom To: <a href="#" class="citylink" id="birm">Birmingham</a> &nbsp;<a href="#" class="citylink" id="bris">Bristol</a> &nbsp;<a href="#" class="citylink" id="edin">Edinburgh</a> &nbsp;<a href="#" class="citylink" id="leed">Leeds</a> &nbsp;<a href="#" class="citylink" id="live">Liverpool</a> &nbsp;<a href="#" class="citylink" id="lond">London</a> &nbsp;<a href="#" class="citylink" id="manc">Manchester</a> &nbsp;<a href="#" class="citylink" id="newc">Newcastle</a> <br> Back To: <a href="#" class="citylink" id="whol">Great Britain</a></p>
                         </td></tr>
                 </table>
                 <p class="credit">Data Sources: <a href="https://geoportal.statistics.gov.uk/datasets/local-authority-districts-december-2017-super-generalised-clipped-boundaries-in-great-britain">Great Britain LAD Boundaries</a> &nbsp;<a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/2011censuskeystatisticsandquickstatisticsforelectoraldivisionsandoutputareasinwales">England and Wales Disability Data</a> &nbsp;<a href="https://www.scotlandscensus.gov.uk/bulletin-figures-and-tables">Scotland Disability Data</a>
