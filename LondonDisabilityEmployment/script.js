@@ -3,7 +3,7 @@ $(document).ready(function() {
     const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/arunsrini/cjvdoubsh06yh1fmazxvhpaz8',
-        center: [-0.070, 51.517],
+        center: [-0.367,51.491],
         zoom: 9.41
     });
 
@@ -34,7 +34,7 @@ $(document).ready(function() {
             var field = $("input[name='inlineRadioOptions']:checked").val();
 
             var layers = ['0-10', '10-20', '20-30', '30-40', '40-50', '50-60', '60-70', '70-80', '80-90', '90-100'];
-            var colors = ['#cbdce7', '#a8c5d7', '#85aec7', '#6297b6', '#497d9d', '#38617a', '#284657', '#182a34', '#080e11', '#000'];
+            var colors = ['#fefae6', '#fdefb4', '#fce482', '#fbda50', '#facf1e', '#e1b605', '#af8d04', '#7d6503', '#4b3d02', '#191401'];
 
             var expression = ["match", ["get", "GSS_CODE"]];
 
@@ -129,57 +129,123 @@ $(document).ready(function() {
                     'visibility': 'visible'
                 },
                 paint: {
-                    'line-color': '#88b0c8',
-                    'line-width': 4
+                    'line-color': '#a8a8a8',
+                    'line-width': 2
                 },
                 filter: ['==', 'NAME', 'empty']
             });
 
+            var previousGssCode = null;
+            var previousField = null;
+            var chart = null;
             map.on('mousemove', function(e) {
                 var la = map.queryRenderedFeatures(e.point, {
                     layers: ['LocalBoroughs']
                 });
+
+                var gssCode = null;
+                var field = $("input[name='inlineRadioOptions']:checked").val();
+                var year = $('#year-slider')[0].noUiSlider.get();
 
                 if (la.length == 1) {
                     map.setFilter('lahighlight', ['==', 'NAME', la[0].properties.NAME]);
                     $('#location-name').html(la[0].properties.NAME);
                     $('#location-code').html(la[0].properties.GSS_CODE);
 
+
+                    gssCode = la[0].properties.GSS_CODE;
+
+                    console.log(gssCode);
+                    console.log(year);
+                    var statsData = $.grep(jsonData.data, function(row) {
+                        return (row.Year == year) && (row.Code == gssCode);
+                    });
+
+                    $('#variable1').html(statsData[0].Employed_Disabled);
+                    $('#variable2').html(statsData[0].Employed_Not_Disabled);
+
+                    console.log(statsData);
+
                 } else {
                     map.setFilter('lahighlight', ['==', 'NAME', 'null']);
                 }
+
+                // Stops repeated rendering
+                if (!((previousGssCode == gssCode) && (previousField == field))) {
+                    previousGssCode = gssCode;
+                    previousField = field;
+
+                    // console.log(gssCode);
+                    // console.log(field);
+
+                    if (chart) {
+                        chart.destroy();
+                    }
+
+                    var chartData = $.grep(jsonData.data, function(row) {
+                        return row.Code == gssCode;
+                    });
+
+                    // console.log(chartData);
+
+                    if (field == "Employed_Disabled"){
+                        var labels = chartData.map(function(e) {
+                           return e.Year;
+                        });
+                        var source1 = chartData.map(function(e) {
+                           return e.Employed_Disabled;
+                        });
+                        var source2 = chartData.map(function(e) {
+                           return e.Employed_Not_Disabled;
+                        });
+                    } else {
+                        var labels = chartData.map(function(e) {
+                           return e.Year;
+                        });
+                        var source1 = chartData.map(function(e) {
+                           return e.UnEmployed_Disabled;
+                        });
+                        var source2 = chartData.map(function(e) {
+                           return e.UnEmployed_Not_Disabled;
+                        });
+                    }
+
+                    // console.log(labels);
+                    // console.log(source1);
+                    // console.log(source2);
+
+                    var ctx = canvas.getContext('2d');
+                    var config = {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: "Source 1",
+                                data: source1,
+                                borderWidth: 2,
+                                backgroundColor: "rgba(6, 167, 125, 0.1)",
+                                borderColor: "rgba(6, 167, 125, 1)",
+                                pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                                pointBorderColor: "rgba(6, 167, 125, 1)",
+                                pointHoverBackgroundColor: "rgba(6, 167, 125, 1)",
+                                pointHoverBorderColor: "#fff"
+                            },
+                            {
+                                label: "Source 2",
+                                data: source2,
+                                borderWidth: 2,
+                                backgroundColor: "rgba(246, 71, 64, 0.1)",
+                                borderColor: "rgba(246, 71, 64, 1)",
+                                pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                                pointBorderColor: "rgba(246, 71, 64, 1)",
+                                pointHoverBackgroundColor: "rgba(246, 71, 64, 1)",
+                                pointHoverBorderColor: "#fff"
+                            }]
+                        }
+                    };
+                    chart = new Chart(ctx, config);
+                }
             });
         });
-
-        var jsonfile = {
-           "jsonarray": [{
-           "name": "Joe",
-           "age": 12
-           }, {
-           "name": "Tom",
-           "age": 14
-           }]
-        };
-
-        var labels = jsonfile.jsonarray.map(function(e) {
-           return e.name;
-        });
-        var data = jsonfile.jsonarray.map(function(e) {
-           return e.age;
-        });;
-
-        var ctx = canvas.getContext('2d');
-        var config = {
-           type: 'line',
-           data: {
-           labels: labels,
-           datasets: [{
-              label: 'Graph Line',
-              data: data,
-              backgroundColor: '#88b0c8'
-           }]
-           }
-        };
-        var chart = new Chart(ctx, config);
     });
 });
