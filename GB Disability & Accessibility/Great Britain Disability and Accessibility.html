@@ -253,11 +253,11 @@
             <div><span style='background-color: #a4f9af'></span>100</div>
             <br>
             <h4>Disabled Population Density / per k㎡</h4>
-            <div><span style='background-color: #800026'></span>422</div>
-            <div><span style='background-color: #E31A1C'></span>150</div>
-            <div><span style='background-color: #FD8D3C'></span>61</div>
-            <div><span style='background-color: #FED976'></span>25</div>
-            <div><span style='background-color: #FFEDA0'></span>0</div>
+            <div><span style='background-color: #800026'></span>438.0</div>
+            <div><span style='background-color: #E31A1C'></span>159.1</div>
+            <div><span style='background-color: #FD8D3C'></span>63.8</div>
+            <div><span style='background-color: #FED976'></span>25.7</div>
+            <div><span style='background-color: #FFEDA0'></span>1.6</div>
             <br>            
             <div><span style='background-color: #3f7993'></span>Accessible Station</div>
             <div><span style='background-color: #D8D0CD'></span>Inaccessible Station</div>
@@ -306,7 +306,7 @@
                     <tr><td><br><p class="cityfly">Zoom To: <a href="#" class="citylink" id="birm">Birmingham</a> &nbsp;<a href="#" class="citylink" id="bris">Bristol</a> &nbsp;<a href="#" class="citylink" id="edin">Edinburgh</a> &nbsp;<a href="#" class="citylink" id="leed">Leeds</a> &nbsp;<a href="#" class="citylink" id="live">Liverpool</a> &nbsp;<a href="#" class="citylink" id="lond">London</a> &nbsp;<a href="#" class="citylink" id="manc">Manchester</a> &nbsp;<a href="#" class="citylink" id="newc">Newcastle</a> <br> Back To: <a href="#" class="citylink" id="whol">Great Britain</a></p>
                         </td></tr>
                 </table>
-                <p class="credit">Data Sources: <a href="https://geoportal.statistics.gov.uk/datasets/local-authority-districts-december-2017-super-generalised-clipped-boundaries-in-great-britain">Great Britain LAD Boundaries</a> &nbsp;<a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/2011censuskeystatisticsandquickstatisticsforelectoraldivisionsandoutputareasinwales">England and Wales Disability Data</a> &nbsp;<a href="https://www.scotlandscensus.gov.uk/bulletin-figures-and-tables">Scotland Disability Data</a>
+                <p class="credit">Data Sources: <a href="https://geoportal.statistics.gov.uk/datasets/local-authority-districts-december-2017-super-generalised-clipped-boundaries-in-great-britain">Great Britain LAD Boundaries</a> &nbsp;<a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/2011censuskeystatisticsandquickstatisticsforwardsandoutputareasinenglandandwales">England and Wales Disability Data</a> &nbsp;<a href="https://www.scotlandscensus.gov.uk/bulletin-figures-and-tables">Scotland Disability Data</a>
                     <br>
                     <a href="https://www.doogal.co.uk/UkStations.php">Stations Location</a> &nbsp;<a href="https://www.kingqueen.org.uk/rail-station-accessibility-data/">Stations Accessibility Data</a></p>
 
@@ -414,11 +414,11 @@
                         'fill-color': {
                             property: 'Density',
                             stops: [
-                                [0, '#FFEDA0'],
-                                [25, '#FED976'],
-                                [61, '#FD8D3C'],
-                                [150, '#E31A1C'],
-                                [422, '#800026']
+                                [1.6, '#FFEDA0'],
+                                [25.7, '#FED976'],
+                                [63.8, '#FD8D3C'],
+                                [159.1, '#E31A1C'],
+                                [438.0, '#800026']
                             ]
                         }}
                 });
@@ -724,7 +724,7 @@
                             case "edin": long=-3.1833; lat=55.9533; zoom=9; break;
                             case "leed": long=-1.5491; lat=53.8008; zoom=9; break;
                             case "live": long=-2.9916; lat=53.4084; zoom=9; break;
-                            case "lond": long=-0.1278; lat=51.5074; zoom=8; break;
+                            case "lond": long=-0.1278; lat=51.5074; zoom=7.5; break;
                             case "manc": long=-2.2426; lat=53.4808; zoom=9; break;
                             case "newc": long=-1.6178; lat=54.9783; zoom=9; break;
                             case "whol": long=-3.294; lat=55.790; zoom=4.32; break;
@@ -774,18 +774,34 @@
                         }}
                 });
                 
+                afterMap.addLayer({
+                    id: 'lahighlight',
+                    type: 'line',
+                    source: {
+                        type: 'vector',
+                        url: 'mapbox://sangyuhong.1bn51qmx' // Mapbox tileset Map ID
+                    },
+                    'source-layer': 'UKDisabilityAccessibility-cu3ghp', // name of tilesets
+                    'layout': {
+                        'visibility': 'visible'
+                    },
+                    paint: {
+                        'line-color': '#3887be',
+                        'line-width': 3
+                    },
+                    filter: ['==','lad17nm','empty']
+                });
+                
                 afterMap.on('mousemove', function(e) {
                     var la = afterMap.queryRenderedFeatures(e.point, {
                         layers: ['percentage']
                     });
                     
                     if (la.length==1) {
-                        console.log(la[0].properties.lad17nm);
-                        document.getElementById('local-authority').innerHTML = la[0].properties.lad17nm;
-                        console.log(la[0].id);
-                        console.log(la);
+                        afterMap.setFilter('lahighlight', ['==','lad17nm',la[0].properties.lad17nm]);
+                        document.getElementById('local-authority').innerHTML = la[0].properties.lad17nm + ': ' + la[0].properties.StationAcc + ' of ' + la[0].properties.StationAll + ' rail stations are (is) accessible; with ' + la[0].properties.Disability + ' disabled population.';
                     } else {
-                        console.log('No features');
+                        afterMap.setFilter('lahighlight', ['==','lad17nm','null']);
                         document.getElementById('local-authority').innerHTML = "Hover over a local authority on 'Accessile Station Proportion' layer";
                     }
                     
