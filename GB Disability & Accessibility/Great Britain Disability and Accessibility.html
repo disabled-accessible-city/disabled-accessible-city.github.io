@@ -799,7 +799,7 @@
                     
                     if (la.length==1) {
                         afterMap.setFilter('lahighlight', ['==','lad17nm',la[0].properties.lad17nm]);
-                        document.getElementById('local-authority').innerHTML = la[0].properties.lad17nm + ': ' + la[0].properties.StationAcc + ' of ' + la[0].properties.StationAll + ' rail stations are (is) accessible; with ' + la[0].properties.Disability + ' disabled population.';
+                        document.getElementById('local-authority').innerHTML = la[0].properties.lad17nm + ': ' + la[0].properties.StationAcc + ' of ' + la[0].properties.StationAll + ' rail station(s) are/is accessible; with ' + la[0].properties.Disability + ' disabled population.';
                     } else {
                         afterMap.setFilter('lahighlight', ['==','lad17nm','null']);
                         document.getElementById('local-authority').innerHTML = "Hover over a local authority on 'Accessile Station Proportion' layer";
