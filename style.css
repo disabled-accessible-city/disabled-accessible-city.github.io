@@ -247,8 +247,7 @@ p {
 
 #items {
     margin: auto;
-    width: 50vw;
-    height: 50vw;
+    width: 50%;
     padding: 0;
     display: block;
     border-radius: 10px;
