@@ -250,8 +250,12 @@ p {
 }
 
 #items li {
-    display: block;
+    display: inline-block;
     margin: 80px;
+    text-align: center;
+    width: 500px;
+    border-radius: 10px;
+    border-radius: 2px solid #808080;
 
     -webkit-transform: scale(0.5, 0.5);
     transform: scale(0.5, 0.5);
