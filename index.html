@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!--META & TITLE-->
+    <meta charset="utf-8">
+    <meta name="author" content="Arun Srinivasan, Rugina Bogdan, Yafei Ye, Yuhong Sang">
+    <meta name='ref' content='https://github.com/london-rhythms/london-rhythms.github.io/blob/master/index.html'>
+    <meta name='Github account construction and io generation' content="Rugina Bogdan">
+    <meta name='Layout design and all pages merging' content="Yafei Ye, Yuhong Sang">
+    <meta name='Page 1 layout designer' content="Yafei Ye, Yuhong Sang">
+    <meta name='Page 1 text contributor' content="Arun Srinivasan">
+    <meta name='Page 2 designer' content="Yafei Ye, Yuhong Sang">
+    <meta name='Page 3 designer' content="Yuhong Sang">
+    <meta name='Page 4 designer' content="Arun Srinivasan">
+    <meta name='Page 5 designer' content="Yafei Ye">
+    <meta name='Page 6 designer' content="Rugina Bogdan">
+    <title>Disabled Accessibility City</title>
+
+    <!--FULLPAGE-->
+    <link rel="stylesheet" type="text/css" href="https://alvarotrigo.com/fullPage/jquery.fullPage.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://alvarotrigo.com/fullPage/jquery.fullpage.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+    <!--STYLE SHEET-->
+    <link rel="stylesheet" href="style.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=East Sea Dokdo' rel='stylesheet'>
+
+
+    <script>
+        //fullPage settings
+        $(function() {
+            $('#myPage').fullpage({
+                sectionsColor: ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'], // page background
+                anchors: ['page1', 'page2', 'page3', 'page4', 'page5', 'page6'],
+                menu: '#menu',
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <!--NAVIGATION TABS-->
+    <!--free icons from: https://www.flaticon.com-->
+    <ul id="menu">
+        <li data-menuanchor="page1" class="active"><a href="#page1" title="Top"><img src="design/icon_1.png"></a></li>
+        <li data-menuanchor="page2"><a href="#page2" title="Site Map"><img src="design/icon_2.png"></a></li>
+        <li data-menuanchor="page3"><a href="#page3" title="GB D&A"><img src="design/icon_3.png"></a></li>
+        <li data-menuanchor="page4"><a href="#page4" title="Employment"><img src="design/icon_4.png"></a></li>
+        <li data-menuanchor="page5"><a href="#page5" title="Yelp"><img src="design/icon_5.png"></a></li>
+        <li data-menuanchor="page6"><a href="#page6" title="Man FP"><img src="design/icon_6.png"></a></li>
+        <li onclick="on()"><img src="design/icon_7.png" title="About"></li>
+    </ul>
+
+
+    <!-- PAGES -->
+    <div id="myPage">
+
+        <!-- Page1: INTRO-->
+        <div class="section section1">
+            <div class="prjtitle">Disabled Accessibility City</div>
+            <div class="prjintro">One billion of the world’s population have a disability, with an estimated 80% of people with disabilities living in developing countries. These visualisations aim to highlight the socio-economic challenges faced by the disabled in London, one of the world's largest cities. By studying the vision of Manchester to improve their disability inclusion, we hope London has a lot of takeaways in its journey to becoming more "visible" for disabled people.</div>
+            <img src="design/arrows_down.png" alt="Scroll down" class="downarrow" title="Scroll down to explore!">
+        </div>
+
+
+        <!-- Page2: STORY-->
+        <div class="section section2">
+            <ul id="items">
+                <h1>CATALOGUE</h1>
+                <li>
+                    <div class='items'>
+                        <a href="#page3" class='img'><img src="design/icon_3.png"></a>
+                        <a href="#page3" class="subtitles">
+                            <h3>Current Status</h3>
+                            <p>What is the gap between disability and accessibility in Great Britain?</p>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class='items'>
+                        <a href="#page4" class='img'><img src="design/icon_4.png"></a>
+                        <a href="#page4" class="subtitles">
+                            <h3>Disability and Work</h3>
+                            <p>How do disabled people work in London in the past?</p>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class='items'>
+                        <a href="#page5" class='img'><img src="design/icon_5.png"></a>
+                        <a href="#page5" class="subtitles">
+                            <h3>Accessibility and Life</h3>
+                            <p>Where can disabled people go in London in the present?</p>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class='items'>
+                        <a href="#page6" class='img'><img src="design/icon_6.png"></a>
+                        <a href="#page6" class="subtitles">
+                            <h3>Future Imagination</h3>
+                            <p>What can disabled people do in Manchester in the future?</p>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <!-- Page3: GB D&A-->
+        <div class="section section3">
+
+            <!--MAP-->
+            <iframe id="gbda" src="GB%20Disability%20%26%20Accessibility/Great%20Britain%20Disability%20and%20Accessibility.html" height="100%" width="100%" frameborder="0" scrolling="no"></iframe>
+            
+        </div>
+
+
+        <!-- Page4: Employment-->
+        <div class="section section4">
+
+            <!--MAP-->
+            <iframe src="LondonDisabilityEmployment/index.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+
+        </div>
+
+
+        <!-- Page5: Yelp-->
+        <div class="section section5">          
+
+            <!--MAP-->            
+            <iframe src="WheelchairAccessibleBusiness/yelp.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+            
+        </div>
+
+
+
+        <!-- Page6: Man FP-->
+        <div class="section section6">          
+            
+            <!--MAP-->
+            <iframe src="Manchester%20Future%20Plan/index.html" height="100%" width="100%" frameBorder="0"></iframe>
+
+        </div>
+    </div>
+
+
+    <!-- ABOUT -->
+    <div id="about" onclick="off()">
+        <div id="aboutText">
+            <h3>Disabled Accessible City</h3>
+            <br/>
+
+             <p>
+                <br/>Creators : Arun Srinivasan, Rugina Bogdan, Yafei Ye, Yuhong Sang
+                <br/>Map engine : <a href="https://www.mapbox.com/" target="_blank">Mapbox GL JS</a>
+                <br/>Github : <a href="https://github.com/disabled-accessible-city/disabled-accessible-city.github.io/" target="_blank">@disabled-accessible-city</a>
+                <br/>
+                <br/>@ 2019 CASA, University College London</p>
+        </div>
+    </div>
+
+    <!-- ABOUT/CLICK EVENTS -->
+    <script>
+        function on() {
+            document.getElementById("about").style.display = "block";
+        }
+        function off() {
+            document.getElementById("about").style.display = "none";
+        }
+    </script>
+
+</body>
+
+</html>
