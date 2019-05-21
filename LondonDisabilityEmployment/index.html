@@ -20,20 +20,24 @@
 	<body>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="main-area"> 
-					<div class="title-area">
-						<h3>London Disabled Employment Statistics</h3>
-						<p class="credit">Data from <a href="https://data.london.gov.uk/dataset/employment-rates-by-disability">Employment Rates by Disability, Office for Nat. Statistics. Cartography</a></p>
-					</div>
-					<div class="information-area">
-						<h4><div id="location-name"></div></h4>
-						<div>
-							In <span id = "current-year"></span>, <span id = "Disabled_Percent"></span>% of the population were disabled. Of those, <span id = "Employed_Disabled"></span>% are employed and <span id = "UnEmployed_Disabled"></span>% are unemployed in comparison to the able-bodied who are <span id = "Employed_Not_Disabled"></span>% employed and <span id = "UnEmployed_Not_Disabled"></span>% unemployed.
-						</div>
-					</div>
-					<div class="chart-area">
+				<div class="title-area">
+					<h2>London Disabled Employment Statistics</h2>
+				</div>
+				<div class="sidebar">
+					<div class="chart-area info-box">
 						<canvas id="canvas"></canvas>
 					</div> 
+					<div class="information-area info-box">
+						<h4><div id="location-name"></div></h4>
+						<div>
+							<div id="display-stats"></div>
+						</div>
+					</div>
+				</div>
+				<div class="ref-area">
+					<p class="credit">Data from <a href="https://data.london.gov.uk/dataset/employment-rates-by-disability">Employment Rates by Disability, Office for Nat. Statistics. Cartography</a></p>
+				</div>
+				<div class="main-area">
 					<div class="controls">
 						<form class="form-inline">
 							<label class="radio-inline">
