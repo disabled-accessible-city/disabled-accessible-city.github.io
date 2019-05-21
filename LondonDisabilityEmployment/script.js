@@ -2,7 +2,7 @@ $(document).ready(function() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiYXJ1bnNyaW5pIiwiYSI6ImNqcXA2M2hhZDBsMW80M252bDBsbTQ4Zm8ifQ.mFW4JBmqjzluJeiNcnBU9Q';
     const map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/arunsrini/cjvdoubsh06yh1fmazxvhpaz8',
+        style: 'mapbox://styles/arunsrini/cjvycf8m009ct1cmpj96frvxs',
         center: [-0.367,51.491],
         zoom: 9.41
     });
@@ -15,8 +15,6 @@ $(document).ready(function() {
         });
 
         years = $.unique(years).sort();
-
-        console.log(years);
 
         var yearsObject = {};
 
@@ -144,6 +142,7 @@ $(document).ready(function() {
                 });
 
                 var gssCode = null;
+				var stats = null;
                 var field = $("input[name='inlineRadioOptions']:checked").val();
                 var year = $('#year-slider')[0].noUiSlider.get();
 
@@ -151,19 +150,15 @@ $(document).ready(function() {
                     map.setFilter('lahighlight', ['==', 'NAME', la[0].properties.NAME]);
                     $('#location-name').html(la[0].properties.NAME);
                     $('#location-code').html(la[0].properties.GSS_CODE);
-
-
                     gssCode = la[0].properties.GSS_CODE;
 
                     var statsData = $.grep(jsonData.data, function(row) {
                         return (row.Year == year) && (row.Code == gssCode);
                     });
-
-                    $('#Disabled_Percent').html(statsData[0].Disabled_Percent);
-                    $('#Employed_Disabled').html(statsData[0].Employed_Disabled);
-                    $('#UnEmployed_Disabled').html(statsData[0].UnEmployed_Disabled);
-                    $('#Employed_Not_Disabled').html(statsData[0].Employed_Not_Disabled);
-                    $('#UnEmployed_Not_Disabled').html(statsData[0].UnEmployed_Not_Disabled);
+										
+					var stats = 'In '+year+', '+statsData[0].Disabled_Percent+'% of the population were disabled. Of those, '+statsData[0].Employed_Disabled+'% are employed and '+statsData[0].UnEmployed_Disabled+'% are unemployed in comparison to the able-bodied who are '+statsData[0].Employed_Not_Disabled+'% employed and '+statsData[0].UnEmployed_Not_Disabled+'% unemployed.';
+					
+					$('#display-stats').html(stats);
 
                 } else {
                     map.setFilter('lahighlight', ['==', 'NAME', 'null']);
@@ -205,6 +200,7 @@ $(document).ready(function() {
                     }
 
                     var ctx = canvas.getContext('2d');
+                    Chart.defaults.global.defaultFontColor = 'black';
                     var config = {
                         type: 'line',
                         options: {
@@ -233,22 +229,22 @@ $(document).ready(function() {
                                 label: "Disabled",
                                 data: source1,
                                 borderWidth: 2,
-                                backgroundColor: "rgba(6, 167, 125, 0.1)",
-                                borderColor: "rgba(6, 167, 125, 1)",
+                                backgroundColor: "rgba(254,217,118, 0.1)",
+                                borderColor: "rgba(254,217,118, 1)",
                                 pointBackgroundColor: "rgba(225, 225, 225, 1)",
-                                pointBorderColor: "rgba(6, 167, 125, 1)",
-                                pointHoverBackgroundColor: "rgba(6, 167, 125, 1)",
+                                pointBorderColor: "rgba(254,217,118, 1)",
+                                pointHoverBackgroundColor: "rgba(254,217,118, 1)",
                                 pointHoverBorderColor: "#fff"
                             },
                             {
                                 label: "Able-Bodied",
                                 data: source2,
                                 borderWidth: 2,
-                                backgroundColor: "rgba(246, 71, 64, 0.1)",
-                                borderColor: "rgba(246, 71, 64, 1)",
+                                backgroundColor: "rgba(227,26,28, 0.1)",
+                                borderColor: "rgba(227,26,28, 1)",
                                 pointBackgroundColor: "rgba(225, 225, 225, 1)",
-                                pointBorderColor: "rgba(246, 71, 64, 1)",
-                                pointHoverBackgroundColor: "rgba(246, 71, 64, 1)",
+                                pointBorderColor: "rgba(227,26,28, 1)",
+                                pointHoverBackgroundColor: "rgba(227,26,28, 1)",
                                 pointHoverBorderColor: "#fff"
                             }]
                         }
