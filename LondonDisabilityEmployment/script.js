@@ -34,7 +34,7 @@ $(document).ready(function() {
             var field = $("input[name='inlineRadioOptions']:checked").val();
 
             var layers = ['0-10', '10-20', '20-30', '30-40', '40-50', '50-60', '60-70', '70-80', '80-90', '90-100'];
-            var colors = ['#fefae6', '#fdefb4', '#fce482', '#fbda50', '#facf1e', '#e1b605', '#af8d04', '#7d6503', '#4b3d02', '#191401'];
+            var colors = ['#ffffcc','#ffeda0','#fed976','#feb24c','#fd8d3c','#fc4e2a','#ef3b2c','#e31a1c','#bd0026','#800026'];
 
             var expression = ["match", ["get", "GSS_CODE"]];
 
@@ -155,16 +155,15 @@ $(document).ready(function() {
 
                     gssCode = la[0].properties.GSS_CODE;
 
-                    console.log(gssCode);
-                    console.log(year);
                     var statsData = $.grep(jsonData.data, function(row) {
                         return (row.Year == year) && (row.Code == gssCode);
                     });
 
-                    $('#variable1').html(statsData[0].Employed_Disabled);
-                    $('#variable2').html(statsData[0].Employed_Not_Disabled);
-
-                    console.log(statsData);
+                    $('#Disabled_Percent').html(statsData[0].Disabled_Percent);
+                    $('#Employed_Disabled').html(statsData[0].Employed_Disabled);
+                    $('#UnEmployed_Disabled').html(statsData[0].UnEmployed_Disabled);
+                    $('#Employed_Not_Disabled').html(statsData[0].Employed_Not_Disabled);
+                    $('#UnEmployed_Not_Disabled').html(statsData[0].UnEmployed_Not_Disabled);
 
                 } else {
                     map.setFilter('lahighlight', ['==', 'NAME', 'null']);
@@ -175,9 +174,6 @@ $(document).ready(function() {
                     previousGssCode = gssCode;
                     previousField = field;
 
-                    // console.log(gssCode);
-                    // console.log(field);
-
                     if (chart) {
                         chart.destroy();
                     }
@@ -185,8 +181,6 @@ $(document).ready(function() {
                     var chartData = $.grep(jsonData.data, function(row) {
                         return row.Code == gssCode;
                     });
-
-                    // console.log(chartData);
 
                     if (field == "Employed_Disabled"){
                         var labels = chartData.map(function(e) {
@@ -210,17 +204,33 @@ $(document).ready(function() {
                         });
                     }
 
-                    // console.log(labels);
-                    // console.log(source1);
-                    // console.log(source2);
-
                     var ctx = canvas.getContext('2d');
                     var config = {
                         type: 'line',
+                        options: {
+                            title: {
+                              display: true,
+                              text: 'Disabled vs Able-Bodied Employment'
+                            },
+                            scales: {
+                                yAxes: [{
+                                  scaleLabel: {
+                                    display: true,
+                                    labelString: '% of population'
+                                    }
+                                }],
+                                xAxes: [{
+                                  scaleLabel: {
+                                    display: true,
+                                    labelString: 'year'
+                                    }
+                                }]
+                            }
+                        },
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: "Source 1",
+                                label: "Disabled",
                                 data: source1,
                                 borderWidth: 2,
                                 backgroundColor: "rgba(6, 167, 125, 0.1)",
@@ -231,7 +241,7 @@ $(document).ready(function() {
                                 pointHoverBorderColor: "#fff"
                             },
                             {
-                                label: "Source 2",
+                                label: "Able-Bodied",
                                 data: source2,
                                 borderWidth: 2,
                                 backgroundColor: "rgba(246, 71, 64, 0.1)",
