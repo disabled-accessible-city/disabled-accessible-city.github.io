@@ -308,7 +308,7 @@
                 </table>
                 <p class="credit">Data Sources: <a href="https://geoportal.statistics.gov.uk/datasets/local-authority-districts-december-2017-super-generalised-clipped-boundaries-in-great-britain">Great Britain LAD Boundaries</a> &nbsp;<a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/2011censuskeystatisticsandquickstatisticsforwardsandoutputareasinenglandandwales">England and Wales Disability Data</a> &nbsp;<a href="https://www.scotlandscensus.gov.uk/bulletin-figures-and-tables">Scotland Disability Data</a>
                     <br>
-                    <a href="https://www.doogal.co.uk/UkStations.php">Stations Location</a> &nbsp;<a href="https://www.kingqueen.org.uk/rail-station-accessibility-data/">Stations Accessibility Data</a></p>
+                    <a href="https://www.doogal.co.uk/UkStations.php">Rail Stations Location</a> &nbsp;<a href="https://www.kingqueen.org.uk/rail-station-accessibility-data/">Stations Accessibility Data</a> &nbsp;<a href="http://www.diva-gis.org/gdata">Rail Lines</a></p>
 
                 <br>Keep at least one of 'Accessible Station' and 'Inaccessible Station' layer visible, drag the map, search station(s) in the displayed area. After each update of the layer settings, please re-drag the map to populate the updated results.
                 <p class='lim'><input id='feature-filter' type='text' placeholder='Enter correct station name to filter results' />
@@ -462,7 +462,24 @@
                     denLegendEl.style.display = 'none';
                     proLegendEl.style.display = 'block';
                 });
-
+                
+                map.addLayer({
+                    id: 'Rail Line',
+                    type: 'line',
+                    source: {
+                        type: 'vector',
+                        url: 'mapbox://sangyuhong.6e723ntg' // Mapbox tileset Map ID
+                    },
+                    'source-layer': 'UKRailLine-67oi7f', // name of tilesets
+                    'layout': {
+                        'visibility': 'none'
+                    },
+                    paint: {
+                        'line-color': 'rgba(91, 91, 91, 0.8)',
+                        'line-width': 2
+                    }
+                });
+                
                 // Add the proportional circle layer to the map
                 map.addLayer({
                     id: 'Accessible Station',
@@ -548,8 +565,7 @@
                             stops: [[4, 3], [9, 6]]
                         }}
                 });
-
-
+                                                
                 var toggleableLayerIds = [ 'Accessible Station' ];
  
                 for (var i = 0; i < toggleableLayerIds.length; i++) {
@@ -609,7 +625,37 @@
                     var layerss = document.getElementById('menu');
                     layerss.appendChild(link2);
                 }
-
+                
+                var toggleableLayerIds3 = [ 'Rail Line' ];
+ 
+                for (var i = 0; i < toggleableLayerIds3.length; i++) {
+                    var id3 = toggleableLayerIds3[i];
+ 
+                    var link3 = document.createElement('a');
+                    link3.href = '#';
+                    link3.className = '';
+                    link3.textContent = id3;
+ 
+                    link3.onclick = function (e) {
+                        var clickedLayer3 = this.textContent;
+                        e.preventDefault();
+                        e.stopPropagation();
+ 
+                        var visibility3 = map.getLayoutProperty(clickedLayer3, 'visibility');
+ 
+                        if (visibility3 === 'visible') {
+                            map.setLayoutProperty(clickedLayer3, 'visibility', 'none');
+                            this.className = '';
+                        } else {
+                            this.className = 'active';
+                            map.setLayoutProperty(clickedLayer3, 'visibility', 'visible');
+                        }
+                    };
+ 
+                    var layerss = document.getElementById('menu');
+                    layerss.appendChild(link3);
+                }
+                
                 map.on('moveend', function() {
                     var features = map.queryRenderedFeatures({layers:['Accessible Station', 'Inaccessible Station']});
  
@@ -803,10 +849,9 @@
                     } else {
                         afterMap.setFilter('lahighlight', ['==','lad17nm','null']);
                         document.getElementById('local-authority').innerHTML = "Hover over a local authority on 'Accessile Station Proportion' layer";
-                    }
-                    
+                    }                    
                 });
-
+                
             });
 
             var swipe = new mapboxgl.Compare(afterMap, map, {
