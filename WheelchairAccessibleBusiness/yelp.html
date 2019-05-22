@@ -297,7 +297,7 @@ map.on('load', function() {
     map.on('click', 'Sum in Borough', function (e) {
         yourpopup
             .setLngLat(e.lngLat)        
-            .setHTML("<h3>Business in " + e.features[0].properties.NAME + '</h3>Restaurant: ' + e.features[0].properties.Join_Cou + "<br />Food: " + e.features[0].properties.Join_Cou_7 + "<br />Shopping: " + e.features[0].properties.Join_Cou_2 + "<br />Travel: " + e.features[0].properties.Join_Cou_5 + "<br />Leisure: " + e.features[0].properties.Join_Cou_4 + "<br />Night Life: " + e.features[0].properties.Join_Cou_3 + "<br />Beauty and Health: " + e.features[0].properties.Join_Cou_6 + "<br />Local Service: " + e.features[0].properties.Join_Cou_1 + "<br />Total: " + e.features[0].properties.Total_Cou)       
+            .setHTML("<h3>Business in " + e.features[0].properties.NAME + '</h3>Restaurant: ' + e.features[0].properties.Join_Count + "<br />Food: " + e.features[0].properties.Join_Cou_7 + "<br />Shopping: " + e.features[0].properties.Join_Cou_2 + "<br />Travel: " + e.features[0].properties.Join_Cou_5 + "<br />Leisure: " + e.features[0].properties.Join_Cou_4 + "<br />Night Life: " + e.features[0].properties.Join_Cou_3 + "<br />Beauty and Health: " + e.features[0].properties.Join_Cou_6 + "<br />Local Service: " + e.features[0].properties.Join_Cou_1 + "<br />Total: " + e.features[0].properties.Total_Cou)       
             .addTo(map);
     });
 
