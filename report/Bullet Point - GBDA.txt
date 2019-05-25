@@ -1,5 +1,12 @@
+For Introduction
 - Whether the accessibility of the train travels and the distribution of the disabled population are relatively matched
 - Status of population density and proportion
 - Distribution and proportion of accessible rail stations
 - Compare between accessibility and disability (gap exsists)
 - Explore in a specific city or region (London; Liverpool & Knowsley; * If there are sufficient words remaining, may discuss Manchester for linking to the Bogdan Part)
+
+For Conclusion
+- There is a regional difference in accessibility of the train station, accessible proportion is just a way of presenting data, and 100% accessible proportion does not mean that there are more accessible stations in this local authority area.
+- At the local authority level, the distribution of the disabled population is very different between the proportion and the density.
+- In terms of data, accessibility logically corresponds to the level of disability
+- Rail station's accessible facilities of Great Britain still need a lot of improvements, and some plans are already under implementation
