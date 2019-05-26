@@ -565,7 +565,8 @@
                             stops: [[4, 3], [9, 6]]
                         }}
                 });
-                                                
+                
+                // Add show and hide                                
                 var toggleableLayerIds = [ 'Accessible Station' ];
  
                 for (var i = 0; i < toggleableLayerIds.length; i++) {
@@ -595,7 +596,8 @@
                     var layerss = document.getElementById('menu');
                     layerss.appendChild(link);
                 }
-
+                
+                // Add another show and hide
                 var toggleableLayerIds2 = [ 'Inaccessible Station' ];
  
                 for (var i = 0; i < toggleableLayerIds2.length; i++) {
@@ -626,6 +628,7 @@
                     layerss.appendChild(link2);
                 }
                 
+                // Add another show and hide
                 var toggleableLayerIds3 = [ 'Rail Line' ];
  
                 for (var i = 0; i < toggleableLayerIds3.length; i++) {
@@ -838,6 +841,7 @@
                     filter: ['==','lad17nm','empty']
                 });
                 
+                // Set highlight
                 afterMap.on('mousemove', function(e) {
                     var la = afterMap.queryRenderedFeatures(e.point, {
                         layers: ['percentage']
@@ -853,11 +857,9 @@
                 });
                 
             });
-
-            var swipe = new mapboxgl.Compare(afterMap, map, {
-                // Set this to enable comparing two maps by mouse movement:
-                // mousemove: true
-            });
+            
+            // Set comparison
+            var swipe = new mapboxgl.Compare(afterMap, map, {});
             
         </script>
  
