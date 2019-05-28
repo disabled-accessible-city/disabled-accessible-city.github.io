@@ -7,6 +7,8 @@ $(document).ready(function() {
         zoom: 9.41
     });
 
+	// Loading the main JSON Data
+	
     var mainData = $.getJSON('data.json', function(jsonData) {
 
         var years = [];
@@ -20,7 +22,9 @@ $(document).ready(function() {
 
         var minYear = years.shift();
         var maxYear = years.pop();
-
+		
+		// Function to get the year from the slider and color the boroughs and set the legend
+		
         var calculateExpression = function() {
 
             var year = $('#year-slider')[0].noUiSlider.get();
@@ -62,7 +66,8 @@ $(document).ready(function() {
             return expression;
         }
 
-        // Slider
+        // Define noUiSlider
+		
         noUiSlider.create($('#year-slider')[0], {
             start: minYear,
             step: 1,
@@ -132,7 +137,9 @@ $(document).ready(function() {
                 },
                 filter: ['==', 'NAME', 'empty']
             });
-
+			
+			// Defining the on-hover function and rendering of Statistics Data
+			
             var previousGssCode = null;
             var previousField = null;
             var chart = null;
@@ -164,7 +171,8 @@ $(document).ready(function() {
                     map.setFilter('lahighlight', ['==', 'NAME', 'null']);
                 }
 
-                // Stops repeated rendering
+                // Stops repeated rendering of the chart
+				
                 if (!((previousGssCode == gssCode) && (previousField == field))) {
                     previousGssCode = gssCode;
                     previousField = field;
