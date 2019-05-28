@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html>
+//initial setting
+<head>
+    <meta charset='utf-8' />
+    <meta name="author" content="Yafei Ye">
+    <title>Wheelchair Accessible Businesses in London</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+    //add geocoder link
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css' type='text/css' />
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    //add canvasjs link
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+    
+<body>
+
+<div id='map'></div>
+//set introduction layout
+<style>
+    .map-overlay {
+        font: 11.6px/14px 'Open Sans', Arial, Helvetica, sans-serif;
+        position: absolute;
+        width: 22%;
+        min-width: 20%;
+        top: 0px;
+        left: 0px;
+        padding: 10px;
+    }
+    .map-overlay .map-overlay-inner {
+        background-color: rgba(225,225,225,0.8);
+        box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
+        border-radius: 3px;
+        padding: 10px;
+        margin-top: 10px;
+    }
+    .map-overlay table {
+        border: none;
+        width: 100%;
+    }
+    .map-overlay h2 {
+        line-height: 20px;
+        display: block;
+        margin: 0 0 10px;
+    }
+    .map-overlay label {
+        font: 18px/20px 'Open Sans', Arial, Helvetica, sans-serif;
+        display: block;
+        margin: 0 0 0 10px;
+        padding: 0;
+    }
+    .map-overlay .legend .bar {
+        height: 10px;
+        width: 100%;
+        background: linear-gradient(to right, #d9d9d9, #000000, 0.5);
+    }
+    .map-overlay input {
+        background-color: transparent;
+        display: inline-block;
+        width: 100%;
+        min-width: 220px;
+        position: relative;
+        margin: 6px 0 0 0;
+        cursor: ew-resize;
+    }
+    .map-overlay p.credit {
+       margin: 0;
+       padding: 0;
+    }
+    .important-message {
+        line-height: 20px;
+        font-weight: bold;
+    }
+</style>
+    
+//add text to introduction
+<div class='map-overlay top'>
+    <div class='map-overlay-inner'>       
+        <h2>Wheelchair Accessible Businesses in London</h2>
+        <span class="important-message">Data Source: <a href="https://www.yelp.com/developers/documentation/v3/business_search">Yelp API</a>.</span>
+        <p class='credit'>You can click the menu in the top-right to show and hide any types of businesses. By moving your mouse to any points in the map, you can see detailed information about this business in popup. When you hover your mouse over the left charts or click any London boroughs in the map, accurate statistic about all kinds of businesses in this borough will display in the popup as well.</p>
+    </div>
+</div>
+    
+//set borough chart layout
+<style>
+    .borough-area {
+    position: absolute;
+    margin: 10px;
+    top: 27%;
+    left: 0;
+    width: 22%;
+    height: 46%;
+    z-index: 1;
+}
+</style>
+<div id="borough" class="borough-area"></div>
+
+//set type chart layout
+<style>
+    .type-area {
+    position: absolute;
+    margin: 10px;
+    top: 74%;
+    width: 22%;
+    height: 21%;
+    z-index: 1;
+}
+</style>
+<div id="type" class="type-area"></div>
+
+//set legend layout
+<style> 
+.businesslegend {
+    background-color: rgba(150,150,150,0.8);  
+    border-radius: 3px;
+    bottom: 30px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+    font: 12px/20px 'Open Sans', sans-serif;
+    color: #000;
+    padding: 10px;
+    position: absolute;
+    right: 40px;
+    z-index: 1;
+    width: 120px
+}
+.businesslegend h4 {
+    margin: 0 0 5px;
+    font-size: 14px
+}
+.businesslegend div span {
+    border-radius: 50%;
+    display: inline-block;
+    height: 10px;
+    margin-right: 10px;
+    width: 10px;
+}
+</style>
+    
+//set legend colour and name
+<div id='business-legend' class='businesslegend'>
+    <h4>Total Business Number in Each Borough</h4>
+    <div><span style='background-color: #e6e6e6'></span>0</div>
+    <div><span style='background-color: #999999'></span>40</div>
+    <div><span style='background-color: #666666'></span>142</div>
+    <div><span style='background-color: #333333'></span>306</div>
+</div>
+    
+//set business buttons
+<nav id="menu"></nav>
+<style>
+    #menu {
+        background: #fff;
+        position: absolute;
+        z-index: 1;
+        top: 20px;
+        right: 40px;
+        border-radius: 3px;
+        width: 120px;
+        border: 1px solid rgba(255,255,255,0.4);
+        font-family: 'Open Sans', sans-serif;
+    }
+    #menu a {
+        font-size: 12px;
+        color: #404040;
+        display: block;
+        margin: 0;
+        padding: 0;
+        padding: 3px;
+        text-decoration: none;
+        border-bottom: 2px solid rgba(255,255,255,0.4);
+        text-align: center;
+    }
+    #menu a:last-child {
+        border: none;
+    }
+    #menu a:hover {
+        background-color: #f8f8f8;
+        color: #404040;
+        box-shadow:inset 0 0 0 3px rgba(0, 0, 0, 0.10)
+    }
+    #menu a.active {
+        background-color: #FBC02D; 
+        color: #ffffff;
+    }
+    #menu a.active:hover {
+        background: #9E9E9E;
+        box-shadow:inset 0 0 0 3px rgba(0, 0, 0, 0.10)
+    }
+</style>
+    
+//set geocoder position
+<div id='geocoder' class='geocoder'></div>
+<style>
+    .geocoder {
+      position:absolute;
+      z-index:1;
+      width:15%;
+      left:24%;
+      top:20px;
+      }
+    .mapboxgl-ctrl-geocoder { min-width:100%; }
+</style>
+
+//set map layout
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiY2xhaXJleWUiLCJhIjoiY2puMzl1cHpvNTFxNDNxbng4aDBjenVhNSJ9.AaoQSeMFSTt2Wq97UxUjAg';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v9',
+    zoom: 9.7,
+    center: [-0.19, 51.495]
+});
+ 
+map.on('load', function() {
+    //add search function
+    var geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        zoom: 13,
+        placeholder: "Search for the place",
+        bbox: [-0.33, 51.31, 0.07, 51.71]
+      });
+    document.getElementById('geocoder').appendChild(geocoder.onAdd(map))
+    
+    //add 'Sum in Borough' layer and hover highlight effect
+    map.addLayer({
+                id: 'Sum in Borough',
+                type: 'fill',
+                source: {
+                  type: 'vector',
+                  url: 'mapbox://claireye.dujofjql'
+                },
+                'source-layer': 'JOIN-bmt5ge',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                paint: {
+                    'fill-opacity': 0.7,
+                    'fill-outline-color': 'rgba(100, 100, 100, 0.7)',
+                    'fill-color':{
+                        property: 'Total_Cou',
+                            stops: [
+                                [0, '#e6e6e6'],
+                                [40, '#999999'],
+                                [142, '#666666'],
+                                [306, '#000000'],
+                                ]
+                        }
+                }
+              });
+    
+    map.addLayer({
+                id: 'lahighlight',
+                type: 'line',
+                source: {
+                  type: 'vector',
+                  url: 'mapbox://claireye.dujofjql'
+                },
+                'source-layer': 'JOIN-bmt5ge',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                filter: ['==','NAME','empty'],
+                paint: {
+                    'line-color': '#666666', 
+                    'line-width': 2
+                        }
+              });
+    
+    map.on('mousemove', function(e) {
+    var la = map.queryRenderedFeatures(e.point, {
+    layers: ['Sum in Borough'] 
+    });
+    
+    if (la.length==1) {
+    map.setFilter('lahighlight', ['==','NAME',la[0].properties.NAME]); 
+    } else {
+    map.setFilter('lahighlight', ['==','NAME','null']);
+    };
+        
+    //add popup for boroughs
+    var yourpopup = new mapboxgl.Popup({closeButton: false});
+    map.on('click', 'Sum in Borough', function (e) {
+        yourpopup
+            .setLngLat(e.lngLat)        
+            .setHTML("<h3>Business in " + e.features[0].properties.NAME + '</h3>Restaurant: ' + e.features[0].properties.Join_Count + "<br />Food: " + e.features[0].properties.Join_Cou_7 + "<br />Shopping: " + e.features[0].properties.Join_Cou_2 + "<br />Travel: " + e.features[0].properties.Join_Cou_5 + "<br />Leisure: " + e.features[0].properties.Join_Cou_4 + "<br />Night Life: " + e.features[0].properties.Join_Cou_3 + "<br />Beauty and Health: " + e.features[0].properties.Join_Cou_6 + "<br />Local Service: " + e.features[0].properties.Join_Cou_1 + "<br />Total: " + e.features[0].properties.Total_Cou)       
+            .addTo(map);
+    });
+
+    // Change the cursor to a pointer when the mouse is over the states layer.
+    map.on('mouseenter', 'Sum in Borough', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'Sum in Borough', function () {
+    map.getCanvas().style.cursor = '';
+    yourpopup.remove()
+    });
+    });
+    
+    //add tube lines
+    map.addLayer({
+                id: 'Tube Lines',
+                type: 'line',
+                source: {
+                  type: 'vector',
+                  url: 'mapbox://claireye.31twro10'
+                },
+                'source-layer': 'TfL_lines_update-dhi41t',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                paint: {
+                    'line-color': '#8A6346', 
+                    'line-width': 1.5
+                        }
+              });
+    
+    //add business points and popup for these points
+    map.addLayer({
+                id: 'Local Services',
+                type: 'circle',
+                source: {
+                  type: 'vector',
+                  url: 'mapbox://claireye.b43l0k46'
+                },
+                'source-layer': 'localservices-4gzdbb',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                paint: {
+                    'circle-color': '#607D8B',
+                    'circle-opacity': 0.8,
+                    'circle-radius': {
+                        property: 'rating',
+                            stops: [
+                                [{zoom: 10, value: 3}, 2],
+                                [{zoom: 10, value: 5}, 3],
+                                [{zoom: 15, value: 3}, 7],
+                                [{zoom: 15, value: 5}, 10.5],
+                                [{zoom: 18, value: 3}, 12],
+                                [{zoom: 18, value: 5}, 18],
+                                ]
+                        }}
+              });
+    //Another event listener that adds the popup when the user puts their cursor over the circles
+            var mypopup = new mapboxgl.Popup({closeButton: false});
+            map.on('mouseover', 'Local Services', function (e) {
+                    mypopup
+                        .setLngLat(e.features[0].geometry.coordinates)
+                        .setHTML("<h3>" + e.features[0].properties.name + '</h3><img src="' + e.features[0].properties.image_url + '" width = 250px>' + "<br />Categories: " + e.features[0].properties.title + "<br />Location: " + e.features[0].properties.display_address + "<br />Phone Number: " + e.features[0].properties.display_phone + "<br />Price: " + e.features[0].properties.price + "<br />Rating: " + e.features[0].properties.rating + "<br />Review Count: " + e.features[0].properties.review_count)
+                        .addTo(map);
+                });
+
+            // Change the cursor to a pointer when the mouse is over the layer.
+            map.on('mouseenter', 'Local Services', function () {
+                  map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves and remove the popup window.
+            map.on('mouseleave', 'Local Services', function () {
+                map.getCanvas().style.cursor = '';
+                mypopup.remove();
+            });
+          
+    map.addLayer({
+                id: 'Night Life',
+                type: 'circle',
+                source: {
+                  type: 'vector',
+                  url: 'mapbox://claireye.43nkqh2f'
+                },
+                'source-layer': 'nightlife-cwgpdl',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                paint: {
+                    'circle-color': '#3F51B5',
+                    'circle-opacity': 0.8,
+                    'circle-radius': {
+                        property: 'rating',
+                            stops: [
+                                [{zoom: 10, value: 3}, 2],
+                                [{zoom: 10, value: 5}, 3],
+                                [{zoom: 15, value: 3}, 7],
+                                [{zoom: 15, value: 5}, 10.5],
+                                [{zoom: 18, value: 3}, 12],
+                                [{zoom: 18, value: 5}, 18],
+                                ]
+                        }}
+              });
+            map.on('mouseover', 'Night Life', function (e) {
+                    mypopup
+                        .setLngLat(e.features[0].geometry.coordinates)
+                        .setHTML("<h3>" + e.features[0].properties.name + '</h3><img src="' + e.features[0].properties.image_url + '" width = 250px>' + "<br />Categories: " + e.features[0].properties.title + "<br />Location: " + e.features[0].properties.display_address + "<br />Phone Number: " + e.features[0].properties.display_phone + "<br />Price: " + e.features[0].properties.price + "<br />Rating: " + e.features[0].properties.rating + "<br />Review Count: " + e.features[0].properties.review_count)
+                        .addTo(map);
+                });
+
+            // Change the cursor to a pointer when the mouse is over the layer.
+            map.on('mouseenter', 'Night Life', function () {
+                  map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves and remove the popup window.
+            map.on('mouseleave', 'Night Life', function () {
+                map.getCanvas().style.cursor = '';
+                mypopup.remove();
+            });
+      
+    map.addLayer({
+                id: 'Restaurants',
+                type: 'circle',
+                source: {
+                  type: 'vector',
+                  url: 'mapbox://claireye.1qd93btj'
+                },
+                'source-layer': 'restaurants-8rpp0o', 
+                'layout': {
+                    'visibility': 'visible'
+                },
+                paint: {
+                    'circle-color': '#F44336',
+                    'circle-opacity': 0.8,
+                    'circle-radius': {
+                        property: 'rating',
+                            stops: [
+                                [{zoom: 10, value: 3}, 2],
+                                [{zoom: 10, value: 5}, 3],
+                                [{zoom: 15, value: 3}, 7],
+                                [{zoom: 15, value: 5}, 10.5],
+                                [{zoom: 18, value: 3}, 12],
+                                [{zoom: 18, value: 5}, 18],
+                                ]
+                        }}
+              });
+    
+            map.on('mouseover', 'Restaurants', function (e) {
+                    mypopup
+                        .setLngLat(e.features[0].geometry.coordinates)
+                        .setHTML("<h3>" + e.features[0].properties.name + '</h3><img src="' + e.features[0].properties.image_url + '" width = 250px>' + "<br />Categories: " + e.features[0].properties.title + "<br />Location: " + e.features[0].properties.display_address + "<br />Phone Number: " + e.features[0].properties.display_phone + "<br />Price: " + e.features[0].properties.price + "<br />Rating: " + e.features[0].properties.rating + "<br />Review Count: " + e.features[0].properties.review_count)
+                        .addTo(map);
+        
+                });
+
+            // Change the cursor to a pointer when the mouse is over the layer.
+            map.on('mouseenter', 'Restaurants', function () {
+                  map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves and remove the popup window.
+            map.on('mouseleave', 'Restaurants', function () {
+                map.getCanvas().style.cursor = '';
+                mypopup.remove();
+            });
+    
+    map.addLayer({
+                id: 'Food',
+                type: 'circle',
+                source: {
+                  type: 'vector',
+                  url: 'mapbox://claireye.4uy5g3oy' 
+                },
+                'source-layer': 'food-6ksq07', 
+                'layout': {
+                    'visibility': 'visible'
+                },
+                paint: {
+                    'circle-color': '#FF9800',
+                    'circle-opacity': 0.8,
+                    'circle-radius': {
+                        property: 'rating',
+                            stops: [
+                                [{zoom: 10, value: 3}, 2],
+                                [{zoom: 10, value: 5}, 3],
+                                [{zoom: 15, value: 3}, 7],
+                                [{zoom: 15, value: 5}, 10.5],
+                                [{zoom: 18, value: 3}, 12],
+                                [{zoom: 18, value: 5}, 18],
+                                ]
+                        }}
+              });  
+    
+            map.on('mouseover', 'Food', function (e) {
+                    mypopup
+                        .setLngLat(e.features[0].geometry.coordinates)
+                        .setHTML("<h3>" + e.features[0].properties.name + '</h3><img src="' + e.features[0].properties.image_url + '" width = 250px>' + "<br />Categories: " + e.features[0].properties.title + "<br />Location: " + e.features[0].properties.display_address + "<br />Phone Number: " + e.features[0].properties.display_phone + "<br />Price: " + e.features[0].properties.price + "<br />Rating: " + e.features[0].properties.rating + "<br />Review Count: " + e.features[0].properties.review_count)
+                        .addTo(map);
+        
+                });
+
+            // Change the cursor to a pointer when the mouse is over the layer.
+            map.on('mouseenter', 'Food', function () {
+                  map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves and remove the popup window.
+            map.on('mouseleave', 'Food', function () {
+                map.getCanvas().style.cursor = '';
+                mypopup.remove();
+            });
+    
+    map.addLayer({
+                id: 'Shopping',
+                type: 'circle',
+                source: {
+                  type: 'vector',
+                  url: 'mapbox://claireye.46yp3mfq' 
+                },
+                'source-layer': 'shopping-abjc85', 
+                'layout': {
+                    'visibility': 'visible'
+                },
+                paint: {
+                    'circle-color': '#FFEB3B',
+                    'circle-opacity': 0.8,
+                    'circle-radius': {
+                        property: 'rating',
+                            stops: [
+                                [{zoom: 10, value: 3}, 2],
+                                [{zoom: 10, value: 5}, 3],
+                                [{zoom: 15, value: 3}, 7],
+                                [{zoom: 15, value: 5}, 10.5],
+                                [{zoom: 18, value: 3}, 12],
+                                [{zoom: 18, value: 5}, 18],
+                                ]
+                        }}
+              });
+    
+            map.on('mouseover', 'Shopping', function (e) {
+                    mypopup
+                        .setLngLat(e.features[0].geometry.coordinates)
+                        .setHTML("<h3>" + e.features[0].properties.name + '</h3><img src="' + e.features[0].properties.image_url + '" width = 250px>' + "<br />Categories: " + e.features[0].properties.title + "<br />Location: " + e.features[0].properties.display_address + "<br />Phone Number: " + e.features[0].properties.display_phone + "<br />Price: " + e.features[0].properties.price + "<br />Rating: " + e.features[0].properties.rating + "<br />Review Count: " + e.features[0].properties.review_count)
+                        .addTo(map);
+                });
+
+            // Change the cursor to a pointer when the mouse is over the layer.
+            map.on('mouseenter', 'Shopping', function () {
+                  map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves and remove the popup window.
+            map.on('mouseleave', 'Shopping', function () {
+                map.getCanvas().style.cursor = '';
+                mypopup.remove();
+            }); 
+    
+    map.addLayer({
+                id: 'Travel & Hotels',
+                type: 'circle',
+                source: {
+                  type: 'vector',
+                  url: 'mapbox://claireye.ckjle7ko'
+                },
+                'source-layer': 'travel-2b2q2e',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                paint: {
+                    'circle-color': '#4CAF50',
+                    'circle-opacity': 0.8,
+                    'circle-radius': {
+                        property: 'rating',
+                            stops: [
+                                [{zoom: 10, value: 3}, 2],
+                                [{zoom: 10, value: 5}, 3],
+                                [{zoom: 15, value: 3}, 7],
+                                [{zoom: 15, value: 5}, 10.5],
+                                [{zoom: 18, value: 3}, 12],
+                                [{zoom: 18, value: 5}, 18],
+                                ]
+                        }}
+              });
+    
+            map.on('mouseover', 'Travel & Hotels', function (e) {
+                    mypopup
+                        .setLngLat(e.features[0].geometry.coordinates)
+                        .setHTML("<h3>" + e.features[0].properties.name + '</h3><img src="' + e.features[0].properties.image_url + '" width = 250px>' + "<br />Categories: " + e.features[0].properties.title + "<br />Location: " + e.features[0].properties.display_address + "<br />Phone Number: " + e.features[0].properties.display_phone + "<br />Price: " + e.features[0].properties.price + "<br />Rating: " + e.features[0].properties.rating + "<br />Review Count: " + e.features[0].properties.review_count)
+                        .addTo(map);
+                });
+
+            // Change the cursor to a pointer when the mouse is over the layer.
+            map.on('mouseenter', 'Travel & Hotels', function () {
+                  map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves and remove the popup window.
+            map.on('mouseleave', 'Travel & Hotels', function () {
+                map.getCanvas().style.cursor = '';
+                mypopup.remove();
+            }); 
+    
+    map.addLayer({
+                id: 'Leisure',
+                type: 'circle',
+                source: {
+                  type: 'vector',
+                  url: 'mapbox://claireye.bn7ql2d8'
+                },
+                'source-layer': 'leisure-4w68xj',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                paint: {
+                    'circle-color': '#03A9F4',   
+                    'circle-opacity': 0.8,
+                    'circle-radius': {
+                        property: 'rating',
+                            stops: [
+                                [{zoom: 10, value: 3}, 2],
+                                [{zoom: 10, value: 5}, 3],
+                                [{zoom: 15, value: 3}, 7],
+                                [{zoom: 15, value: 5}, 10.5],
+                                [{zoom: 18, value: 3}, 12],
+                                [{zoom: 18, value: 5}, 18],
+                                ]
+                        }}
+              });
+    
+            map.on('mouseover', 'Leisure', function (e) {
+                    mypopup
+                        .setLngLat(e.features[0].geometry.coordinates)
+                        .setHTML("<h3>" + e.features[0].properties.name + '</h3><img src="' + e.features[0].properties.image_url + '" width = 250px>' + "<br />Categories: " + e.features[0].properties.title + "<br />Location: " + e.features[0].properties.display_address + "<br />Phone Number: " + e.features[0].properties.display_phone + "<br />Price: " + e.features[0].properties.price + "<br />Rating: " + e.features[0].properties.rating + "<br />Review Count: " + e.features[0].properties.review_count)
+                        .addTo(map);
+                });
+
+            // Change the cursor to a pointer when the mouse is over the layer.
+            map.on('mouseenter', 'Leisure', function () {
+                  map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves and remove the popup window.
+            map.on('mouseleave', 'Leisure', function () {
+                map.getCanvas().style.cursor = '';
+                mypopup.remove();
+            }); 
+
+    map.addLayer({
+                id: 'Beauty & Health',
+                type: 'circle',
+                source: {
+                  type: 'vector',
+                  url: 'mapbox://claireye.9f6bwcag'
+                },
+                'source-layer': 'beautyhealth-dhpqeu',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                paint: {
+                    'circle-color': '#9C27B0',
+                    'circle-opacity': 0.8,
+                    'circle-radius': {
+                        property: 'rating',
+                            stops: [
+                                [{zoom: 10, value: 3}, 2],
+                                [{zoom: 10, value: 5}, 3],
+                                [{zoom: 15, value: 3}, 7],
+                                [{zoom: 15, value: 5}, 10.5],
+                                [{zoom: 18, value: 3}, 12],
+                                [{zoom: 18, value: 5}, 18],
+                                ]
+                        }}
+               });
+    
+            map.on('mouseover', 'Beauty & Health', function (e) {
+                    mypopup
+                        .setLngLat(e.features[0].geometry.coordinates)
+                        .setHTML("<h3>" + e.features[0].properties.name + '</h3><img src="' + e.features[0].properties.image_url + '" width = 250px>' + "<br />Categories: " + e.features[0].properties.title + "<br />Location: " + e.features[0].properties.display_address + "<br />Phone Number: " + e.features[0].properties.display_phone + "<br />Price: " + e.features[0].properties.price + "<br />Rating: " + e.features[0].properties.rating + "<br />Review Count: " + e.features[0].properties.review_count)
+                        .addTo(map);
+                });
+
+            // Change the cursor to a pointer when the mouse is over the layer.
+            map.on('mouseenter', 'Beauty & Health', function () {
+                  map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves and remove the popup window.
+            map.on('mouseleave', 'Beauty & Health', function () {
+                map.getCanvas().style.cursor = '';
+                mypopup.remove();
+            }); 
+    
+});
+
+//generate buttons
+var toggleableLayerIds = [ 'Restaurants', 'Food', 'Shopping', 'Travel & Hotels', 'Leisure', 'Night Life', 'Beauty & Health', 'Local Services', 'Sum in Borough', 'Tube Lines'];
+
+var LayerColors = ['#F44336', '#FF9800', '#FFEB3B', '#4CAF50', '#03A9F4', '#3F51B5', '#9C27B0', '#607D8B', '#999999', '#8A6346'];
+    
+for (var i = 0; i < toggleableLayerIds.length; i++) {
+    var id = toggleableLayerIds[i];
+    var color = LayerColors[i]
+
+    var link = document.createElement('a');
+    link.href = '#';
+    link.className = 'active';
+    link.textContent = id;
+    link.style.backgroundColor = color;
+
+    link.onclick = function (e) {
+        var clickedLayer = this.textContent;
+        e.preventDefault();
+        e.stopPropagation();
+
+        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+        if (visibility === 'visible') {
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.className = '';
+        } 
+        else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+        }
+    };
+
+    var layers = document.getElementById('menu');
+    layers.appendChild(link);
+}
+
+</script>
+    
+//add borough and type chart
+<script>
+    window.onload = function () {
+
+    //Better to construct options first and then pass it as a parameter
+    var options = {
+        animationEnabled: true,
+        theme: "light1",
+        backgroundColor: 'rgba(225,225,225,0.8)',
+        title:{
+            text: "Wheelchair Accessible Businesses in Each London Borough",
+            fontFamily: "Arial",
+            fontSize: 14,
+            fontStyle: "bold",
+            fontColor: "black",
+            horizontalAlign: "left",
+        },
+        axisX:{
+            labelFontSize: 10,
+            interval: 1,
+            labelWrap: true,
+            labelMaxWidth: 200
+        },
+        axisY2:{
+            lineThickness: 0,
+        },
+        toolTip: {
+            shared: true
+        },
+        legend:{
+            verticalAlign: "top",
+            horizontalAlign: "center"
+        },
+        data: [
+        {    
+            type: "stackedBar",
+            showInLegend: false,
+            name: "Restaurants",
+            axisYType: "secondary",
+            color: "#f44336",
+            dataPoints: [
+                { y: 0, label: "Harrow" },
+                { y: 2, label: "Croydon" },
+                { y: 1, label: "Bromley" },
+                { y: 1, label: "Hounslow" },
+                { y: 2, label: "Richmond upon Thames" },
+                { y: 3, label: "Merton" },
+                { y: 2, label: "Ealing" },
+                { y: 6, label: "Haringey" },
+                { y: 5, label: "Barnet" },
+                { y: 3, label: "Waltham Forest" },
+                { y: 5, label: "Brent" },
+                { y: 4, label: "Lewisham" },
+                { y: 6, label: "Greenwich" },
+                { y: 13, label: "Newham" },
+                { y: 15, label: "Wandsworth" },
+                { y: 20, label: "City of Londons" },
+                { y: 21, label: "Hammersmith and Fulham" },
+                { y: 16, label: "Lambeth" },
+                { y: 27, label: "Southwark" },
+                { y: 30, label: "Kensington and Chelsea" },
+                { y: 33, label: "Islington" },
+                { y: 33, label: "Hackney" },
+                { y: 33, label: "Tower Hamlets" },
+                { y: 54, label: "Camden" },
+                { y: 117, label: "Westminster" },
+            ]
+        },
+        {
+            type: "stackedBar",
+            showInLegend: false,
+            name: "Food",
+            axisYType: "secondary",
+            color: "#FF9800",
+            dataPoints: [
+                { y: 0, label: "Harrow" },
+                { y: 0, label: "Croydon" },
+                { y: 0, label: "Bromley" },
+                { y: 0, label: "Hounslow" },
+                { y: 1, label: "Richmond upon Thames" },
+                { y: 3, label: "Merton" },
+                { y: 0, label: "Ealing" },
+                { y: 1, label: "Haringey" },
+                { y: 1, label: "Barnet" },
+                { y: 2, label: "Waltham Forest" },
+                { y: 0, label: "Brent" },
+                { y: 0, label: "Lewisham" },
+                { y: 1, label: "Greenwich" },
+                { y: 2, label: "Newham" },
+                { y: 7, label: "Wandsworth" },
+                { y: 4, label: "City of Londons" },
+                { y: 5, label: "Hammersmith and Fulham" },
+                { y: 8, label: "Lambeth" },
+                { y: 15, label: "Southwark" },
+                { y: 14, label: "Kensington and Chelsea" },
+                { y: 9, label: "Islington" },
+                { y: 12, label: "Hackney" },
+                { y: 13, label: "Tower Hamlets" },
+                { y: 10, label: "Camden" },
+                { y: 36, label: "Westminster" },
+            ]
+        },
+        {
+            type: "stackedBar",
+            showInLegend: false,
+            name: "Shopping",
+            axisYType: "secondary",
+            color: "#FFEB3B",
+            dataPoints: [
+                { y: 0, label: "Harrow" },
+                { y: 0, label: "Croydon" },
+                { y: 0, label: "Bromley" },
+                { y: 3, label: "Hounslow" },
+                { y: 0, label: "Richmond upon Thames" },
+                { y: 0, label: "Merton" },
+                { y: 3, label: "Ealing" },
+                { y: 2, label: "Haringey" },
+                { y: 4, label: "Barnet" },
+                { y: 0, label: "Waltham Forest" },
+                { y: 5, label: "Brent" },
+                { y: 2, label: "Lewisham" },
+                { y: 0, label: "Greenwich" },
+                { y: 1, label: "Newham" },
+                { y: 6, label: "Wandsworth" },
+                { y: 6, label: "City of Londons" },
+                { y: 9, label: "Hammersmith and Fulham" },
+                { y: 8, label: "Lambeth" },
+                { y: 7, label: "Southwark" },
+                { y: 15, label: "Kensington and Chelsea" },
+                { y: 8, label: "Islington" },
+                { y: 4, label: "Hackney" },
+                { y: 15, label: "Tower Hamlets" },
+                { y: 15, label: "Camden" },
+                { y: 31, label: "Westminster" },
+            ]
+        },
+        {
+            type: "stackedBar",
+            showInLegend: false,
+            name: "Travel",
+            axisYType: "secondary",
+            color:"#4CAF50",
+            //indexLabel: "$#total",
+            dataPoints: [
+                { y: 0, label: "Harrow" },
+                { y: 0, label: "Croydon" },
+                { y: 0, label: "Bromley" },
+                { y: 0, label: "Hounslow" },
+                { y: 1, label: "Richmond upon Thames" },
+                { y: 1, label: "Merton" },
+                { y: 0, label: "Ealing" },
+                { y: 0, label: "Haringey" },
+                { y: 0, label: "Barnet" },
+                { y: 1, label: "Waltham Forest" },
+                { y: 0, label: "Brent" },
+                { y: 1, label: "Lewisham" },
+                { y: 5, label: "Greenwich" },
+                { y: 0, label: "Newham" },
+                { y: 0, label: "Wandsworth" },
+                { y: 4, label: "City of Londons" },
+                { y: 0, label: "Hammersmith and Fulham" },
+                { y: 7, label: "Lambeth" },
+                { y: 0, label: "Southwark" },
+                { y: 8, label: "Kensington and Chelsea" },
+                { y: 1, label: "Islington" },
+                { y: 4, label: "Hackney" },
+                { y: 7, label: "Tower Hamlets" },
+                { y: 12, label: "Camden" },
+                { y: 19, label: "Westminster" },           
+            ]
+        },
+        {
+            type: "stackedBar",
+            showInLegend: false,
+            name: "Leisure",
+            axisYType: "secondary",
+            color:"#03a9f4",
+            //indexLabel: "$#total",
+            dataPoints: [
+                { y: 0, label: "Harrow" },
+                { y: 0, label: "Croydon" },
+                { y: 0, label: "Bromley" },
+                { y: 1, label: "Hounslow" },
+                { y: 3, label: "Richmond upon Thames" },
+                { y: 0, label: "Merton" },
+                { y: 2, label: "Ealing" },
+                { y: 0, label: "Haringey" },
+                { y: 1, label: "Barnet" },
+                { y: 1, label: "Waltham Forest" },
+                { y: 0, label: "Brent" },
+                { y: 2, label: "Lewisham" },
+                { y: 3, label: "Greenwich" },
+                { y: 0, label: "Newham" },
+                { y: 2, label: "Wandsworth" },
+                { y: 0, label: "City of Londons" },
+                { y: 0, label: "Hammersmith and Fulham" },
+                { y: 7, label: "Lambeth" },
+                { y: 2, label: "Southwark" },
+                { y: 2, label: "Kensington and Chelsea" },
+                { y: 4, label: "Islington" },
+                { y: 4, label: "Hackney" },
+                { y: 6, label: "Tower Hamlets" },
+                { y: 6, label: "Camden" },
+                { y: 10, label: "Westminster" },
+            ]
+        },
+        {
+            type: "stackedBar",
+            showInLegend: false,
+            name: "Night Life",
+            axisYType: "secondary",
+            color:"#3f51b5",
+            //indexLabel: "$#total",
+            dataPoints: [
+                { y: 0, label: "Harrow" },
+                { y: 2, label: "Croydon" },
+                { y: 1, label: "Bromley" },
+                { y: 0, label: "Hounslow" },
+                { y: 1, label: "Richmond upon Thames" },
+                { y: 1, label: "Merton" },
+                { y: 2, label: "Ealing" },
+                { y: 0, label: "Haringey" },
+                { y: 0, label: "Barnet" },
+                { y: 2, label: "Waltham Forest" },
+                { y: 2, label: "Brent" },
+                { y: 3, label: "Lewisham" },
+                { y: 2, label: "Greenwich" },
+                { y: 7, label: "Newham" },
+                { y: 3, label: "Wandsworth" },
+                { y: 12, label: "City of Londons" },
+                { y: 14, label: "Hammersmith and Fulham" },
+                { y: 10, label: "Lambeth" },
+                { y: 12, label: "Southwark" },
+                { y: 11, label: "Kensington and Chelsea" },
+                { y: 21, label: "Islington" },
+                { y: 14, label: "Hackney" },
+                { y: 12, label: "Tower Hamlets" },
+                { y: 22, label: "Camden" },
+                { y: 46, label: "Westminster" },
+            ]
+        },
+        {
+            type: "stackedBar",
+            showInLegend: false,
+            name: "Beauty and Health",
+            axisYType: "secondary",
+            color:"#9c27b0",
+            //indexLabel: "$#total",
+            dataPoints: [
+                { y: 0, label: "Harrow" },
+                { y: 0, label: "Croydon" },
+                { y: 2, label: "Bromley" },
+                { y: 1, label: "Hounslow" },
+                { y: 2, label: "Richmond upon Thames" },
+                { y: 3, label: "Merton" },
+                { y: 1, label: "Ealing" },
+                { y: 2, label: "Haringey" },
+                { y: 2, label: "Barnet" },
+                { y: 3, label: "Waltham Forest" },
+                { y: 2, label: "Brent" },
+                { y: 4, label: "Lewisham" },
+                { y: 2, label: "Greenwich" },
+                { y: 1, label: "Newham" },
+                { y: 6, label: "Wandsworth" },
+                { y: 1, label: "City of Londons" },
+                { y: 6, label: "Hammersmith and Fulham" },
+                { y: 5, label: "Lambeth" },
+                { y: 4, label: "Southwark" },
+                { y: 4, label: "Kensington and Chelsea" },
+                { y: 7, label: "Islington" },
+                { y: 12, label: "Hackney" },
+                { y: 10, label: "Tower Hamlets" },
+                { y: 21, label: "Camden" },
+                { y: 36, label: "Westminster" },
+            ]
+        },
+        {
+            type: "stackedBar",
+            showInLegend: false,
+            name: "Local Service",
+            axisYType: "secondary",
+            color:"#607d8b",
+            indexLabel: "#total",
+            indexLabelPlacement: "outside",
+            dataPoints: [
+                { y: 1, label: "Harrow" },
+                { y: 0, label: "Croydon" },
+                { y: 1, label: "Bromley" },
+                { y: 0, label: "Hounslow" },
+                { y: 0, label: "Richmond upon Thames" },
+                { y: 0, label: "Merton" },
+                { y: 1, label: "Ealing" },
+                { y: 1, label: "Haringey" },
+                { y: 0, label: "Barnet" },
+                { y: 1, label: "Waltham Forest" },
+                { y: 0, label: "Brent" },
+                { y: 0, label: "Lewisham" },
+                { y: 2, label: "Greenwich" },
+                { y: 0, label: "Newham" },
+                { y: 2, label: "Wandsworth" },
+                { y: 0, label: "City of Londons" },
+                { y: 0, label: "Hammersmith and Fulham" },
+                { y: 1, label: "Lambeth" },
+                { y: 2, label: "Southwark" },
+                { y: 0, label: "Kensington and Chelsea" },
+                { y: 3, label: "Islington" },
+                { y: 4, label: "Hackney" },
+                { y: 1, label: "Tower Hamlets" },
+                { y: 2, label: "Camden" },
+                { y: 11, label: "Westminster" },
+            ]
+        },
+        ]
+    };
+
+    $("#borough").CanvasJSChart(options);
+    
+    var options2 = {
+        animationEnabled: true,
+        theme: "light1",
+        backgroundColor: 'rgba(225,225,225,0.8)',
+        title:{
+            text: "Wheelchair Accessible Businesses / All Business in London * 100%",
+            fontFamily: "Arial",
+            fontSize: 14,
+            fontStyle: "bold",
+            fontColor: "black",
+            horizontalAlign: "left",
+        },
+        axisX:{
+            labelFontSize: 10,
+            interval: 1,
+            labelWrap: true,
+            labelMaxWidth: 200,
+            reversed: true
+        },
+        axisY2:{
+            lineThickness: 0,
+            suffix: "%",
+        },
+        toolTip: {
+            shared: false,
+            suffix: "%",
+        },
+        legend:{
+            verticalAlign: "top",
+            horizontalAlign: "center"
+        },
+        data: [
+        {
+            type: "bar",
+            showInLegend: false,
+            axisYType: "secondary",
+            indexLabel: "{y}%",
+            indexLabelPlacement: "outside",
+            dataPoints: [
+                { y: 3.48, label: "Restaurants", color: '#f44336'},
+                { y: 2.44, label: "Food", color: '#ff9800'},
+                { y: 2.15, label: "Shopping", color: '#ffeb3b'},
+                { y: 1.61, label: "Travel", color: '#4caf50'},
+                { y: 1.50, label: "Leisure", color: '#03a9f4'},
+                { y: 4.35, label: "Night Life", color: '#3f51b5'},
+                { y: 3.51, label: "Beauty and Health", color: '#9c27b0'},
+                { y: 0.56, label: "Local Service", color: '#607d8b'},
+                { y: 2.50, label: "Total", color: '#999999'},
+            ]
+        },
+        ]
+    };
+    $("#type").CanvasJSChart(options2);
+    }
+</script>
+</body>
+</html>
